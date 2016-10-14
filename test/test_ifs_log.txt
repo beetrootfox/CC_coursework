@@ -1,0 +1,1 @@
+fundef(main,[n;args],Seq(If(Bin_Operator(Geq,Identifier(a),Identifier(b)),readint(),Let(x,Const(12))),If(Bin_Operator(Noteq,Identifier(a),Identifier(c)),printint(Const(1)),Empty)))

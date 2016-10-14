@@ -1,0 +1,1 @@
+fundef(main,[],Seq(Seq(Seq(Let(a,Bin_Operator(Times,Const(15),Bin_Operator(Minus,Empty,Const(4)))),Identifier(x)),Const(2)),Application(Identifier(fun),Seq(Seq(Seq(Identifier(a),Const(2)),Const(3)),Application(Identifier(fun),Const(1))))))

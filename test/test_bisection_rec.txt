@@ -1,0 +1,14 @@
+rec_bisection(n,nmax,a,b,f){
+	new c = [(a + b)/2];
+	if(f(c) == 0 | n == nmax){
+		!c
+	}else{
+		if(f(c) > 0){
+			rec_bisection(n+1;nmax;a;c;f)
+		}else{
+			rec_bisection(n+1;nmax;c;b;f)
+		}
+	}
+}
+
+

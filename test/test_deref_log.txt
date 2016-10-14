@@ -1,0 +1,1 @@
+fundef(main,[n;args],Deref(Identifier(a)))

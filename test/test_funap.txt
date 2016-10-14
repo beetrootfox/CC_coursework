@@ -1,0 +1,6 @@
+fun(a,b){
+	new c = [a / b];
+	fun(a;c)
+}
+
+

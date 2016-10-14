@@ -1,0 +1,1 @@
+fundef(fun,[a;b],Seq(New(c,Bin_Operator(Div,Identifier(a),Identifier(b))),Application(Identifier(fun),Seq(Identifier(a),Identifier(c)))))

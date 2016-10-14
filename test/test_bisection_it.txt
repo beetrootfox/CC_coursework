@@ -1,0 +1,16 @@
+bisection_it(nmax,a,b,f){
+	new c = [0];
+	new n = [0];
+	while(n < nmax & f(c) != 0){
+		c = [(a + b)/2];
+		if(f(c) > 0){
+			b = c
+		}else{
+			a = c
+		};
+		n = n + 1
+	};
+	!c
+}
+
+

@@ -1,0 +1,2 @@
+fundef(fun,[a;b],New(c,Bin_Operator(Plus,Bin_Operator(Plus,Bin_Operator(Plus,Identifier(a),Identifier(b)),Identifier(a)),Bin_Operator(Div,Bin_Operator(Times,Bin_Operator(Times,Identifier(b),Identifier(a)),Const(2)),Bin_Operator(Plus,Const(2),Const(3))))))
+fundef(main,[],If(Bin_Operator(Noteq,Identifier(a),Const(3)),Application(Identifier(fun),Seq(Const(125),Const(13))),Empty))

@@ -1,0 +1,7 @@
+main(n, args){
+	while(1 == 1){
+		printint(314)
+	}
+}
+
+

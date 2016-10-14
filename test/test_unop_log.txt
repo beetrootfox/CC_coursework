@@ -1,0 +1,1 @@
+fundef(main,[],Unary_Operator(Not,Bin_Operator(Equal,Const(1),Const(1))))
