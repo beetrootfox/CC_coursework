@@ -1,0 +1,19 @@
+/*
+Tests initialization of local and global variables
+let initializes globally
+new initializes locally
+"feature" of the language that avoids shift/reduce conflincts 
+is that every opening "in" must have a closing ";"
+*/
+main(){
+	new x = (-a <- 3)
+	 in 
+	  let y = x
+	   in
+	   x + y
+	   ;
+	 ;
+}
+
+
+

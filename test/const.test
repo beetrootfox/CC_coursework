@@ -1,0 +1,9 @@
+/*
+Most basic
+Tests constant
+*/
+main(){
+	2;
+}
+
+

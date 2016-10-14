@@ -1,0 +1,8 @@
+/*
+Tests unary operator "NOT" [~]
+*/
+main(){
+	~(1 == 1);
+}
+
+

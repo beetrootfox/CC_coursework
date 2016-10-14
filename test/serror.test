@@ -1,0 +1,9 @@
+/*
+Test terminates with a syntax error and a nice message
+*/
+main(){
+	^_^;
+}
+
+
+

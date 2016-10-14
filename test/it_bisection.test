@@ -1,0 +1,27 @@
+/*
+Bisection algorithm test, iterative approach.
+Required arguments are 
+	nmax -- theshold for maximum iterations
+	a -- such that f(a) < 0
+	b -- such that f(b) > 0
+	f -- function to be bisected 
+*/
+bisection_it(nmax;a;b;f){
+	new c = 0 in
+	new n = 0 in
+	while(n < nmax & (f<-c) != 0){
+		c = (a + b)/2;
+		if((f<-c) > 0){
+			b = c;
+		}else{
+			a = c;
+		};
+		n = n + 1;
+	};
+	!c;
+	;;
+}
+
+
+
+

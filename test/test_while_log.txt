@@ -1,1 +1,0 @@
-fundef(main,[n;args],While(Bin_Operator(Equal,Const(1),Const(1)),printint(Const(314))))

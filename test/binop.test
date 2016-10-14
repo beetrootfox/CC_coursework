@@ -1,0 +1,17 @@
+/*
+ Test of the following binary operators:
+	+	-	/	*
+	<	>	==	!=
+	&	|
+ Minus can also act as an unary operator creating expression of type
+Bin_Operator(Minus,Empty,Expression)
+*/
+main(){
+	(a + b)/4 + a - 2 + 3 / 2;
+	a == b | (a < 0 & b > 0);
+	-2;
+}
+
+
+
+

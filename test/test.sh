@@ -1,13 +1,30 @@
-../src/./test.native < test_seq.txt > test_seq_log.txt
-../src/./test.native < test_while.txt > test_while_log.txt
-../src/./test.native < test_ifs.txt > test_ifs_log.txt
-../src/./test.native < test_deref.txt > test_deref_log.txt
-../src/./test.native < test_binop.txt > test_binop_log.txt
-../src/./test.native < test_unop.txt > test_unop_log.txt
-../src/./test.native < test_funap.txt > test_funap_log.txt
-../src/./test.native < test_asg.txt > test_asg_log.txt
-../src/./test.native < test_comp1.txt > test_comp1_log.txt
-../src/./test.native < test_comp2.txt > test_comp2_log.txt
-../src/./test.native < test_bisection_rec.txt > test_bisection_rec_log.txt
-../src/./test.native < test_bisection_it.txt > test_bisection_it_log.txt
-echo OK
+#!/bin/bash
+
+./test.native < ../test/const.test > ../test/const.log
+echo "running const.test, if failed see exception message above"
+./test.native < ../test/id.test > ../test/id.log
+echo "running id.test, if failed see exception message above"
+./test.native < ../test/asg.test > ../test/asg.log
+echo "running asg.test, if failed see exception message above"
+./test.native < ../test/binop.test > ../test/binop.log
+echo "running binop.test, if failed see exception message above"
+./test.native < ../test/deref.test > ../test/deref.log
+echo "running deref.test, if failed see exception message above"
+./test.native < ../test/funap.test > ../test/funap.log
+echo "running funap.test, if failed see exception message above"
+./test.native < ../test/ifs.test > ../test/ifs.log
+echo "running ifs.test, if failed see exception message above"
+./test.native < ../test/newlet.test > ../test/newlet.log
+echo "running newlet.test, if failed see exception message above"
+./test.native < ../test/unop.test > ../test/unop.log
+echo "running unop.test, if failed see exception message above"
+./test.native < ../test/while.test > ../test/while.log
+echo "running while.test, if failed see exception message above"
+./test.native < ../test/it_bisection.test > ../test/it_bisection.log
+echo "running it_bisection.test, if failed see exception message above"
+./test.native < ../test/rec_bisection.test > ../test/rec_bisection.log
+echo "running rec_bisection.test, if failed see exception message above"
+./test.native < ../test/perror.test
+echo "running parsing error test, see exception above"
+./test.native < ../test/serror.test
+echo "running syntax error test, see exception above"

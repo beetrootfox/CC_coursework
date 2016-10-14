@@ -1,1 +1,0 @@
-fundef(main,[n;args],Seq(Const(1),Const(2)))

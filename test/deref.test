@@ -1,0 +1,10 @@
+/*
+	Dereference test
+*/
+main(n; args){
+	!a;
+	!(a + !b);
+	!(!a == b & !c);
+}
+
+
