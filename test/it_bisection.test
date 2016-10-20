@@ -12,14 +12,13 @@ bisection_it(nmax;a;b;f){
 	while(n < nmax & (f<-c) != 0){
 		c = (a + b)/2;
 		if((f<-c) > 0){
-			b = c;
+			b = c
 		}else{
-			a = c;
+			a = c
 		};
-		n = n + 1;
+		n = n + 1
 	};
-	!c;
-	;;
+	!c
 }
 
 

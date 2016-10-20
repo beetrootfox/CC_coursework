@@ -6,13 +6,8 @@ new initializes locally
 is that every opening "in" must have a closing ";"
 */
 main(){
-	new x = (-a <- 3)
-	 in 
-	  let y = x
-	   in
-	   x + y
-	   ;
-	 ;
+	new x = (-a <- 3) in 
+	  let y = x  in  x + y
 }
 
 

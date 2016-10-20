@@ -6,7 +6,7 @@ main(n; args){
 	if(a > b){
 		readint();
 	}else{
-		let x = 12 in x;
+		let x = 12 in x
 	};
 	if(a != c){
 		printint(1);

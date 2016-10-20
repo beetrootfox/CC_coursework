@@ -1,0 +1,14 @@
+/*
+Tests evaluation of a while loop. Returns Command,
+for evaluation of a while loop with dereference in the end
+see fib.etest
+*/
+main(){
+	x = 10;
+	while(!x > 0){
+		x = !x - 1;
+	}
+}
+
+
+

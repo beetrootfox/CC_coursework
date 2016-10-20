@@ -1,0 +1,9 @@
+/*
+This test generates a runtime error.
+*/
+main(){
+	!x;
+}
+
+
+

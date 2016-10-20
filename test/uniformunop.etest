@@ -1,0 +1,10 @@
+/*
+Tests evaluation and uniformity of unary operators.
+Must evaluate to false.
+*/
+main(){
+	~(if(1 == 1) { 1 != 2 });
+}
+
+
+

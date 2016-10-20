@@ -1,0 +1,11 @@
+/*
+Tests evaluation and uniformity of dereferencig.
+*/
+main(){
+	x = var1;
+	y = var2;
+	!(if(0 == 0) { x } else { y });
+}
+
+
+
