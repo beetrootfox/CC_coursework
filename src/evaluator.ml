@@ -1,6 +1,7 @@
 open Ast
 open String
 open Hashtbl
+open Printf
 
 type value =
 | Constant of int
@@ -126,6 +127,9 @@ let rec eval_exp = function
 | Const n -> Constant n
 | Identifier x -> Id x
 | Empty -> Nothing
+| Printint e ->
+        let v = eval_exp e in
+        Printf.printf ("%s\n") (value_to_string v); Command
 | _ -> err_exit "Functions, let bindings and IO are not implemented!"
 ;;
 

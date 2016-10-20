@@ -11,6 +11,7 @@ main(){
 		y = !x + !y;
 		x = !t;
 		n = !n + 1;
+		printint(!x);
 	};
 	!x;
 }
