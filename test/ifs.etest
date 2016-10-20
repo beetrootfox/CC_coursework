@@ -1,19 +1,13 @@
 /*
 Tests evaluation of conditionals.
 */
-firstfun(){
+main(){
 	x = 10;
 	y = 11;
 	if(!x > !y){
 		x;
 	}else{
 		y;
-	}
-};
-secondfun(){
-	x = 11 > 10;
-	if(!x){
-		!x
 	}
 }
 

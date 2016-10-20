@@ -2,13 +2,12 @@
 Testing assignment evaluation and uniformity.
 */
 main(){
-	(if(1 == 1) { x } else { y }) = 4;
-	!x;
-};
-fun(){
-	x = (if(1 != 2) { -5 } else { 5 });
+	(if(1 == 1) { x } else { y }) = (4; (if(1 != 2) { -5 } else { 5 }));
 	!x;
 }
+
+
+
 
 
 
