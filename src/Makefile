@@ -1,5 +1,4 @@
-all:
-	parser
+all: parser
 parser:
 	ocamlbuild -use-menhir -use-ocamlfind test.native
 clean:
