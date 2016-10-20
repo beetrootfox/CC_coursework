@@ -18,7 +18,7 @@ and 11 evaluation tests:
         
 Output of parser tests is saved in `.log` files in `test` directory, evaluation tests have their output saved in `.elog` files.
 Parser tests will produce `ERROR` output in response to a `Runtime error` or a `Parsing/Syntax error` and `OK` if tests pass.
-Evaluation tests will produce `ERROR` in case of errors and `OK` if they pass, also, `WRONG EVALUATION`, if they are evaluated to an incorrect value.
+Evaluation tests will produce `ERROR` in case of errors and `OK` if they pass, also, `WRONG EVALUATION`, if they are evaluated to an incorrect value. Most parser tests will fail with a `Runtime error` since they are run through the evaluator while containing `new/let` bindings and other unimplemented features.
 
 #AST description
 AST was not changed much. Notable changes:
