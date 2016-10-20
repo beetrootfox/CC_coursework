@@ -13,12 +13,14 @@ open Ast
 %token <string> IDENTIFIER
 %token EOF
 
+%left IN
 %left SEMICOLON
 %nonassoc ASSIGN
 
-%nonassoc NOT
 %left AND OR
 %nonassoc EQ_OP LE_OP GE_OP NE_OP
+%nonassoc NOT
+
 
 %left PLUS_OP MINUS_OP
 %left TIMES_OP DIV_OP
@@ -83,9 +85,9 @@ expression:
     { Printint e1 }
     | x = IDENTIFIER
     { Identifier x }
-    | INIT_GLOBAL; x = IDENTIFIER; ASSIGN; e1 = expression; IN; e2 = expression; SEMICOLON
+    | INIT_GLOBAL; x = IDENTIFIER; ASSIGN; e1 = expression; IN; e2 = expression
     { Let (x, e1, e2) }
-    | INIT_LOCAL; x = IDENTIFIER; ASSIGN; e1 = expression; IN; e2 = expression; SEMICOLON
+    | INIT_LOCAL; x = IDENTIFIER; ASSIGN; e1 = expression; IN; e2 = expression
     { New (x, e1, e2) }
     | LPAREN; e1 = expression; RPAREN
     { e1 }

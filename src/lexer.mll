@@ -19,14 +19,13 @@ let print_position lexbuf =
 let int = ['0'-'9']['0'-'9']*
 let id = ['a'-'z' 'A'-'Z' '_']['a'-'z' 'A'-'Z' '0'-'9' '_']*
 let white = [' ' '\t']+
-let comment = "/*"_*"*/"
 let newline = '\r' | '\n' | "\r\n"
 
 rule read =
     parse
 | white         { read lexbuf }
 | newline       { read lexbuf }
-| comment       { read lexbuf }
+| "/*"          { read_comment lexbuf }
 | int           { INT (int_of_string (Lexing.lexeme lexbuf)) }
 | '+'           { PLUS_OP }
 | '-'           { MINUS_OP }
@@ -61,3 +60,8 @@ rule read =
                   print_position lexbuf;
                   exit(-1)
                 }
+
+and read_comment =
+parse
+| "*/"          { read lexbuf }
+|  _            { read_comment lexbuf }
