@@ -1,1 +1,1 @@
-Runtime error! Expression [ Identifier(x) ] is of type 'Constant of int' but was expecting 'Id of string'.
+Constant 1

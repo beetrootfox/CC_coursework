@@ -1,7 +1,7 @@
 /* Variable capture test */
 main(){
-	let x = 2 in
-	let y = 3 in
+	new x = 2 in
+	new y = 3 in
 	let f = lambda y;x { !x - !y } in
 	(f <- x;y)
 }
