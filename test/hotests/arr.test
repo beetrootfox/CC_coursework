@@ -3,7 +3,7 @@ main(){
         let loop = lambda x;l {             
                         new n = 0 in
                         while(!n < l){
-                                printint(x[!n]);
+                                printint(get x[!n]);
                                 n = !n + 1
                         }
                    }
@@ -11,7 +11,7 @@ main(){
         (loop <- arr;10);
         new n = 0 in
         while(!n < 10){
-                arrayset(arr;!n;3);
+                arrayset arr[!n] = 3;
                 n = !n + 1
         };
         (loop <- arr;10)

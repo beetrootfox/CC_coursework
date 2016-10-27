@@ -12,7 +12,7 @@ open Ast
 %token SEMICOLON LPAREN RPAREN LBRACE RBRACE LBRACKET RBRACKET
 %token <string> IDENTIFIER
 %token LAMBDA
-%token MKARRAY STARRAY OF
+%token MKARRAY STARRAY OF GET
 %token EOF
 
 %left IN
@@ -101,7 +101,7 @@ expression:
     { Lambda (args, e) }
     | MKARRAY; x = IDENTIFIER; LBRACKET; e1 = expression; RBRACKET; OF; e2 = expression; IN; e3 = expression
     { Array_make (x, e1, e2, e3) }
-    | e1 = expression; LBRACKET; e2 = expression; RBRACKET
+    | GET; e1 = expression; LBRACKET; e2 = expression; RBRACKET
     { Array_get (e1, e2) }
-    | STARRAY; LPAREN; e1 = expression; SEMICOLON; e2 = expression; SEMICOLON; e3 = expression; RPAREN
+    | STARRAY; e1 = expression; LBRACKET; e2 = expression; RBRACKET; ASSIGN; e3 = expression
     { Array_set (e1, e2, e3) }
