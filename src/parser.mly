@@ -11,11 +11,13 @@ open Ast
 %token IF ELSE WHILE
 %token SEMICOLON LPAREN RPAREN LBRACE RBRACE
 %token <string> IDENTIFIER
+%token LAMBDA
 %token EOF
 
 %left IN
-%left SEMICOLON
+%right SEMICOLON
 %nonassoc ASSIGN
+
 
 %left AND OR
 %nonassoc EQ_OP LE_OP GE_OP NE_OP
@@ -39,6 +41,7 @@ fundef:
     fname = IDENTIFIER; LPAREN; arg_list = separated_list(SEMICOLON, IDENTIFIER); RPAREN; LBRACE; e1 = expression; option(SEMICOLON); RBRACE
     { fname, arg_list, e1 }
 
+(*TODO: deal with parser error op option(SEMICOLON)*)
 
 opt_exp:
     |
@@ -93,3 +96,11 @@ expression:
     { e1 }
     | e1 = expression; SEMICOLON; e2 = expression
     { Seq (e1, e2) }
+    | LAMBDA; args = separated_list(SEMICOLON, IDENTIFIER); LBRACE; e = expression; RBRACE;
+    { Lambda (args, e) }
+    (*| MKARRAY; x = IDENTIFIER; LBRACKET; e1 = expression; RBRACKET; OF; e2 = expression; IN; e3 = expression
+    { Array_make (x, e1, e2, e3) }
+    | e1 = expression; LBRACKET; e2 = expression; RBRACKET
+    { Array_get (e1, e2) }
+    | STARRAY; LPAREN; e1 = expression; SEMICOLON; e2 = expression; SEMICOLON; e3 = expression; RPAREN
+    { Array_set (e1, e2, e3) }*)

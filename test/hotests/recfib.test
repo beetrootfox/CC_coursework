@@ -1,0 +1,23 @@
+/* Tests recursion. */
+fib(x;y;n){
+        if(!n > 0){ 
+                new t = 0 in
+                t = !y;
+                y = !x + !y;
+                x = !t;
+                n = !n - 1;
+                printint(!x);
+                (fib <- x;y;n)
+        }else{
+                !x
+        }
+};
+main(){
+        new x = 0 in
+        new y = 1 in
+        new n = 14 in
+        (fib <- x;y;n)
+}
+
+
+

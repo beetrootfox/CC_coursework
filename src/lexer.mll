@@ -7,7 +7,7 @@ open Printf
 
 let hash =
 [
-"new", INIT_LOCAL; "let", INIT_GLOBAL; "if", IF; "else", ELSE; "while", WHILE; "in", IN
+"new", INIT_LOCAL; "let", INIT_GLOBAL; "if", IF; "else", ELSE; "while", WHILE; "in", IN; "lambda", LAMBDA
 ]
 
 let print_position lexbuf =

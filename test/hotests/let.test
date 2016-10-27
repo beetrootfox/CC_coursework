@@ -1,0 +1,11 @@
+/* Tests Let-binding */
+main(){
+	let a = 4 in 
+	printint(a);
+	let a = 44 in
+	printint(a);
+	let a = 444 in
+	printint(a)
+}
+
+

@@ -7,9 +7,11 @@ open String
 open Printf
 open Evaluator
 
-let fundef_to_string (s, sl, exp) = String.concat "" ["fundef("; s; ",["; String.concat ";" sl; "],"; exp_to_string exp; ")"]
+(*let fundef_to_string (s, sl, exp) = String.concat "" ["fundef("; s; ",["; String.concat ";" sl; "],"; exp_to_string exp; ")"]*)
 
-let fundef_to_value_str (s, sl, exp) = exp |> eval_exp |> value_to_string
+(*let fundef_to_value_str (s, sl, exp) = exp |> eval_exp |> value_to_string*)
+let fundef_to_value_str flist = let (_, exp) = eval_prog ("",Empty) flist in
+                                exp |> eval_exp [] |> value_to_string
 
 let parse_with_error lexbuf =
     try Parser.prog Lexer.read lexbuf with
@@ -29,7 +31,6 @@ let _ =
     |> Buffer.contents
     |> Lexing.from_string
     |> parse_with_error
-    |> List.map fundef_to_value_str
-    |> String.concat ",\n"
+    |> fundef_to_value_str
     |> print_endline
 ;;

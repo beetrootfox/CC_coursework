@@ -1,0 +1,8 @@
+/* Tests New-bound pointers */
+main(){
+	new a = 2 in 
+	new x = a in
+	!!x
+}
+
+

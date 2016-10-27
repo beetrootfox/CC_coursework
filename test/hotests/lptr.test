@@ -1,0 +1,9 @@
+/* Tests Let-bound pointers */
+main(){
+	new a = 2 in
+	let b = a in
+	!b
+}
+
+
+
