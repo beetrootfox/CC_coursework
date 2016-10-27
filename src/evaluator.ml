@@ -205,7 +205,7 @@ and eval_exp env = function
          | Constant n -> let first = eval_exp env e2 in
                          let ar = Array.make n first in
                          Hashtbl.replace arrays x ar;
-                         eval_exp env e3
+                         let v2 = eval_exp env e3 in Hashtbl.remove arrays x; v2
         | _           -> err_exit "Array length must be an integer!")
 | Array_set (e1, e2, e3) ->
         let name = eval_exp env e1 in
