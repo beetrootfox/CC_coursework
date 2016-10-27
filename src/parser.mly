@@ -9,9 +9,10 @@ open Ast
 %token AND OR NOT
 %token INIT_LOCAL INIT_GLOBAL ASSIGN DEREF IN PIPELINE
 %token IF ELSE WHILE
-%token SEMICOLON LPAREN RPAREN LBRACE RBRACE
+%token SEMICOLON LPAREN RPAREN LBRACE RBRACE LBRACKET RBRACKET
 %token <string> IDENTIFIER
 %token LAMBDA
+%token MKARRAY STARRAY OF
 %token EOF
 
 %left IN
@@ -98,9 +99,9 @@ expression:
     { Seq (e1, e2) }
     | LAMBDA; args = separated_list(SEMICOLON, IDENTIFIER); LBRACE; e = expression; RBRACE;
     { Lambda (args, e) }
-    (*| MKARRAY; x = IDENTIFIER; LBRACKET; e1 = expression; RBRACKET; OF; e2 = expression; IN; e3 = expression
+    | MKARRAY; x = IDENTIFIER; LBRACKET; e1 = expression; RBRACKET; OF; e2 = expression; IN; e3 = expression
     { Array_make (x, e1, e2, e3) }
     | e1 = expression; LBRACKET; e2 = expression; RBRACKET
     { Array_get (e1, e2) }
     | STARRAY; LPAREN; e1 = expression; SEMICOLON; e2 = expression; SEMICOLON; e3 = expression; RPAREN
-    { Array_set (e1, e2, e3) }*)
+    { Array_set (e1, e2, e3) }

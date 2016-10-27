@@ -24,9 +24,9 @@ type expression =
     | Let of string * expression * expression (* let x = e in e*)
     | New of string * expression * expression (* new x = e in e*)
     | Lambda of string list * expression (* (fun args) { e } *)
-    (*| Array_set of expression * expression * expression
+    | Array_set of expression * expression * expression
     | Array_get of expression * expression
-    | Array_make of string * expression * expression * expression *)
+    | Array_make of string * expression * expression * expression
 
 type fundef = string * string list * expression
 
@@ -87,7 +87,7 @@ let rec exp_to_string = function
 | Let (s, e1, e2) -> String.concat "" ["Let("; s; ","; exp_to_string e1; ","; exp_to_string e2; ")"]
 | New (s, e1, e2) -> String.concat "" ["New("; s; ","; exp_to_string e1; ","; exp_to_string e2; ")"]
 | Lambda (s, e) -> String.concat "" ["Lambda("; String.concat "," s; ","; exp_to_string e;")"]
-(*| Array_get (e1, e2) -> "array def"
+| Array_get (e1, e2) -> "array def"
 | Array_set (e1, e2, e3) -> "array"
-| Array_make (s, e1, e2, e3) -> "make"*)
+| Array_make (s, e1, e2, e3) -> "make"
 ;;

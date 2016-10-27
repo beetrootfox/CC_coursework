@@ -43,3 +43,5 @@ AST was not changed much. Notable changes:
 #Evaluator
 For now only basic logic and imperative features are supported, as well as `printint(x)` function.
 Evaluator features explicit runtime errors that differentiate between failures happening due to a type mismatch, unbound variable dereferencing or the use of unimplemented features. Errors also provide information on the expected types, types that caused an error and unbound variable names.
+
+Added New/Let bindings, Function application, Higher order function, Functors, Lambdas, Arrays, Printint support.

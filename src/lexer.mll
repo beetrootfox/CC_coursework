@@ -7,7 +7,7 @@ open Printf
 
 let hash =
 [
-"new", INIT_LOCAL; "let", INIT_GLOBAL; "if", IF; "else", ELSE; "while", WHILE; "in", IN; "lambda", LAMBDA
+"new", INIT_LOCAL; "let", INIT_GLOBAL; "if", IF; "else", ELSE; "while", WHILE; "in", IN; "lambda", LAMBDA; "arraymake", MKARRAY; "arrayset", STARRAY; "of", OF
 ]
 
 let print_position lexbuf =
@@ -35,6 +35,8 @@ rule read =
 | '<'           { LE_OP }
 | '>'           { GE_OP }
 | "<-"          { PIPELINE }
+| '['           { LBRACKET }
+| ']'           { RBRACKET }
 | '&'           { AND }
 | '|'           { OR }
 | '~'           { NOT }

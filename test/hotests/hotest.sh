@@ -24,5 +24,6 @@ test "New-bindning test" ../test/hotests/new.test ../test/hotests/new.log ../tes
 test "New-bound pointers" ../test/hotests/nptr.test ../test/hotests/nptr.log ../test/hotests/ans/nptr.ans
 test "Recursion test" ../test/hotests/recfib.test ../test/hotests/recfib.log ../test/hotests/ans/recfib.ans
 test "Scope/shadowing test" ../test/hotests/varscp.test ../test/hotests/varscp.log ../test/hotests/ans/varscp.ans 
+test "Array test" ../test/hotests/arr.test ../test/hotests/arr.log ../test/hotests/ans/arr.ans
 
 echo "Tests DONE"

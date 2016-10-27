@@ -18,6 +18,8 @@ let fundefs = Hashtbl.create 100
 
 let store = Hashtbl.create 100
 
+let arrays = Hashtbl.create 100
+
 let newref  () = addr_gbl := !addr_gbl + 1;
                 !addr_gbl
 
@@ -197,21 +199,51 @@ and eval_exp env = function
                      | _  -> err_exit (exp_to_string e ^ " must be a lambda function"))
         | _    -> err_exit (exp_to_string e1 ^ " is not a function!"))
 | Lambda (args, e) as l -> Func l
-(*| Array_make (x,e1,e2,e3) ->
+| Array_make (x,e1,e2,e3) ->
         let index = eval_exp env e1 in
         (match index with
          | Constant n -> let first = eval_exp env e2 in
                          let ar = Array.make n first in
                          Hashtbl.replace arrays x ar;
                          eval_exp env e3
+        | _           -> err_exit "Array length must be an integer!")
 | Array_set (e1, e2, e3) ->
         let name = eval_exp env e1 in
         (match name with
          | Id x -> let ar = (try Hashtbl.find arrays x with
-                             | Not_found -> err_exit ("Array " ^ x " was not initialized!")
+                             | Not_found -> err_exit ("Array " ^ x ^ " was not initialized!"))
                    in let index = eval_exp env e2 in
                    (match index with
-                    | Constant n -> let v = eval_exp env e3 in))))*)
+                    | Constant n -> let v = eval_exp env e3 in
+                                    (match (Array.get ar 0, v) with
+                                    | (Constant _, Constant _) -> (try Array.set ar n v with
+                                                                   | Invalid_argument s -> err_exit "Array index out of bounds!"); Command
+                                    | (Id _, Id _)          ->(try Array.set ar n v with
+                                                                    | Invalid_argument s -> err_exit "Array index out of bounds!"); Command
+                                    | (Command, Command)    ->(try Array.set ar n v with
+                                                                    | Invalid_argument s -> err_exit "Array index out of bounds!"); Command
+                                    | (Comp _, Comp _)     ->(try Array.set ar n v with
+                                                                    | Invalid_argument s -> err_exit "Array index out of bounds!"); Command
+                                    | (Nothing, Nothing)   ->(try Array.set ar n v with
+                                                                    | Invalid_argument s -> err_exit "Array index out of bounds!"); Command
+                                    | (Reference _, Reference _) ->(try Array.set ar n v with
+                                                                    | Invalid_argument s -> err_exit "Array index out of bounds!"); Command
+                                    | (Func _, Func _)  -> (try Array.set ar n v with
+                                                           | Invalid_argument s-> err_exit "Array index out of bounds!"); Command
+                                    | _ -> err_exit "Type mismatch!")
+                    | _           -> err_exit "Array index must be an int!")
+         | _    -> err_exit "Array name must be an identifier!")
+| Array_get (e1, e2) ->
+        let name = eval_exp env e1 in
+        (match name with
+         | Id x -> let ar = (try Hashtbl.find arrays x with
+                             | Not_found -> err_exit ("Array " ^ x ^ " was not initialised!"))
+                       in let index = eval_exp env e2 in
+                       (match index with
+                        | Constant n -> (try Array.get ar n with
+                                         | Invalid_argument s -> err_exit "Array index out of bounds!")
+                        | _          -> err_exit "Array index must be an int!")
+         | _    -> err_exit "Array name must be an identifier!")
 | _ -> err_exit "Functions, let bindings and IO are not implemented!"
 ;;
 
