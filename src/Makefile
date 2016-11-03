@@ -4,4 +4,4 @@ parser:
 clean:
 	rm -rf _build; rm test.native
 tests:
-	bash ../test/hotests/hotest.sh
+	bash ../test/hotests/hotest.sh; bash ../test/optests/test.sh

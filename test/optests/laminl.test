@@ -1,0 +1,9 @@
+/* Tests lambda inlining */
+(main <- ){
+	let fun = lambda x,y { if (x > y) { x } else { y } } in
+	let a = 12 in
+	let b = 22 in
+	(fun <- a,b)
+}
+
+

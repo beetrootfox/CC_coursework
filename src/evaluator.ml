@@ -14,11 +14,17 @@ type value =
 
 let addr_gbl = ref 0
 
+let eval_steps = ref 0
+
+let inc_evstps () = eval_steps := !eval_steps + 1
+
 let fundefs = Hashtbl.create 100
 
 let store = Hashtbl.create 100
 
 let arrays = Hashtbl.create 100
+
+let readfeed = ref [1;2;3;4;5;6;7;8;9;10;11;12;13;14;15;16;17;18;19;20;21;22;23;24;25;26;27;28;29;30]
 
 let newref  () = addr_gbl := !addr_gbl + 1;
                 !addr_gbl
@@ -86,15 +92,13 @@ let rec fun_lookup x = function
                               fun_lookup x xs
 
 let rec make_env x env acc = function
-| ([],Empty) -> acc
+| ([],[]) -> acc
 | ([],_)     -> err_exit ("Function " ^ x ^ " is applied to too many arguments!")
-| (_,Empty)  -> err_exit ("Function " ^ x ^ " is applied to too few arguments!")
-| (a::args, Seq(e1, e2)) -> let v = eval_exp env e1 in
-                            make_env x env ((a, v)::acc) (args, e2)
-| (a::args, e)           -> let v = eval_exp env e in
-                            make_env x env ((a, v)::acc) (args, Empty)
+| (_,[])  -> err_exit ("Function " ^ x ^ " is applied to too few arguments!")
+| (a::args, e::es) -> let v = eval_exp env e in
+                            make_env x env ((a, v)::acc) (args, es)
 
-and eval_exp env = function
+and eval_exp env = inc_evstps (); function
 | Asg (e1, e2)    ->
     let id = eval_exp env e1 in
     (match id with
@@ -115,6 +119,15 @@ and eval_exp env = function
                 eval_exp env e
                 else Command
     | _      -> err_exit (err_string e1 v (Comp true)))
+| For (x, e1, e2, e3) ->
+    let v1 = eval_exp env e1 in
+    let v2 = eval_exp env e2 in
+    (match (v1,v2) with
+    | (Constant n1, Constant n2) -> if n1 <= n2 then
+                                    let e = Seq(e3, For(x, Const(n1 + 1), Const n2, e3)) in
+                                    eval_exp ((x,v1)::env) e
+                                    else Command
+    | _                          -> err_exit "For loop boundaries must be integers!")
 | If (e1, e2, e3) ->
     let v = eval_exp env e1 in
     (match v with
@@ -206,7 +219,7 @@ and eval_exp env = function
                          let ar = Array.make n first in
                          Hashtbl.replace arrays x ar;
                          let v2 = eval_exp env e3 in Hashtbl.remove arrays x; v2
-        | _           -> err_exit "Array length must be an integer!")
+         | _           -> err_exit "Array length must be an integer!")
 | Array_set (e1, e2, e3) ->
         let name = eval_exp env e1 in
         (match name with
@@ -217,19 +230,19 @@ and eval_exp env = function
                     | Constant n -> let v = eval_exp env e3 in
                                     (match (Array.get ar 0, v) with
                                     | (Constant _, Constant _) -> (try Array.set ar n v with
-                                                                   | Invalid_argument s -> err_exit "Array index out of bounds!"); Command
+                                                                   | Invalid_argument s -> err_exit s); Command
                                     | (Id _, Id _)          ->(try Array.set ar n v with
-                                                                    | Invalid_argument s -> err_exit "Array index out of bounds!"); Command
+                                                                    | Invalid_argument s -> err_exit s); Command
                                     | (Command, Command)    ->(try Array.set ar n v with
-                                                                    | Invalid_argument s -> err_exit "Array index out of bounds!"); Command
+                                                                    | Invalid_argument s -> err_exit s); Command
                                     | (Comp _, Comp _)     ->(try Array.set ar n v with
-                                                                    | Invalid_argument s -> err_exit "Array index out of bounds!"); Command
+                                                                    | Invalid_argument s -> err_exit s); Command
                                     | (Nothing, Nothing)   ->(try Array.set ar n v with
-                                                                    | Invalid_argument s -> err_exit "Array index out of bounds!"); Command
+                                                                    | Invalid_argument s -> err_exit s); Command
                                     | (Reference _, Reference _) ->(try Array.set ar n v with
-                                                                    | Invalid_argument s -> err_exit "Array index out of bounds!"); Command
+                                                                    | Invalid_argument s -> err_exit s); Command
                                     | (Func _, Func _)  -> (try Array.set ar n v with
-                                                           | Invalid_argument s-> err_exit "Array index out of bounds!"); Command
+                                                           | Invalid_argument s-> err_exit s); Command
                                     | _ -> err_exit "Type mismatch!")
                     | _           -> err_exit "Array index must be an int!")
          | _    -> err_exit "Array name must be an identifier!")
@@ -244,6 +257,8 @@ and eval_exp env = function
                                          | Invalid_argument s -> err_exit "Array index out of bounds!")
                         | _          -> err_exit "Array index must be an int!")
          | _    -> err_exit "Array name must be an identifier!")
-| _ -> err_exit "Functions, let bindings and IO are not implemented!"
+| Readint -> (match !readfeed with
+              | []    -> err_exit "No integers to read!"
+              | x::xs -> readfeed := xs; Constant x)
 ;;
 

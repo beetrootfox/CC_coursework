@@ -1,0 +1,8 @@
+/* Tests pointer inlining */
+(main <- ){
+	new a = 18 in
+	let p = a in
+	!p
+}
+
+

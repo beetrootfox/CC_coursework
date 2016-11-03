@@ -1,9 +1,9 @@
 /* Variable capture test */
-main(){
+(main <-){
 	new x = 2 in
 	new y = 3 in
-	let f = lambda y;x { !x - !y } in
-	(f <- x;y)
+	let f = lambda y,x { !x - !y } in
+	(f <- x,y)
 }
 
 

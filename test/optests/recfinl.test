@@ -1,0 +1,13 @@
+/* Tests inlining recursive functions */
+(rec <- n){	
+	if(n < 12){
+		(rec <- n+1)
+	}else{
+		n
+	}
+};
+(main <-){
+	(rec <- 0)
+}
+
+

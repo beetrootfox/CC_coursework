@@ -1,11 +1,11 @@
 /* Tests Let-binding */
-main(){
+(main <-){
 	let a = 4 in 
-	printint(a);
+	(printint <- a);
 	let a = 44 in
-	printint(a);
+	(printint <- a);
 	let a = 444 in
-	printint(a)
+	(printint <- a)
 }
 
 

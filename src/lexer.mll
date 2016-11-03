@@ -7,7 +7,8 @@ open Printf
 
 let hash =
 [
-"new", INIT_LOCAL; "let", INIT_GLOBAL; "if", IF; "else", ELSE; "while", WHILE; "in", IN; "lambda", LAMBDA; "arraymake", MKARRAY; "arrayset", STARRAY; "of", OF; "get", GET
+"new", INIT_LOCAL; "let", INIT_GLOBAL; "if", IF; "else", ELSE; "while", WHILE; "in", IN; "lambda", LAMBDA; "arraymake", MKARRAY; "arrayset", STARRAY; "of", OF; "get", GET;
+"for", FOR; "to", TO
 ]
 
 let print_position lexbuf =
@@ -41,6 +42,7 @@ rule read =
 | '|'           { OR }
 | '~'           { NOT }
 | "!="          { NE_OP }
+| ','           { COMMA }
 | '='           { ASSIGN }
 | '!'           { DEREF }
 | ';'           { SEMICOLON }
@@ -48,7 +50,7 @@ rule read =
 | ')'           { RPAREN }
 | '{'           { LBRACE }
 | '}'           { RBRACE }
-| "readint()"   { READ_INT }
+| "(readint <-)"   { READ_INT }
 | "printint"    { PRINT_INT }
 | id as w
                 {

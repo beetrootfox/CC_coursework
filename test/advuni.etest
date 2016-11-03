@@ -1,11 +1,11 @@
 /*
 Advanced uniformity test.
 */
-main(){
-	x = 11;
-	y = 10;
+(main <-){
+	new x = 11 in
+	new y = 10 in
 	(if (!x > !y) { x } else { y }) = (while (!y < 20) { y = !y + 2 }; !y);
-	!x;
+	!x
 }
 
 

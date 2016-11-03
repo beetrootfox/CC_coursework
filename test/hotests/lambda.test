@@ -1,11 +1,11 @@
 /* Tests lambda expressions. */
-main(){
+(main <-){
 	new a = 3 in
 	new b = 4 in
-	let f = lambda x;y { if (!x > !y) { x = 100 } else { y = 100 } } in
-	(f <- a;b);
-	printint(!a);
-	printint(!b)
+	let f = lambda x,y { if (!x > !y) { x = 100 } else { y = 100 } } in
+	(f <- a,b);
+	(printint <- !a);
+	(printint <- !b)
 }
 
 

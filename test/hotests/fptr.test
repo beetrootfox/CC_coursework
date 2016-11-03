@@ -1,19 +1,19 @@
 /* Tests function pointers/ho functions */
-plus(a;b){	
+(plus <- a,b){	
 	!a + !b /* definig plus operation */
 };
-minus(a;b){
+(minus <- a,b){
 	!a - !b /* defining minus operation */
 };
-apply(fun;a;b){
-	(fun <- a;b) /* function to apply a functor */
+(apply <- fun,a,b){
+	(fun <- a,b) /* function to apply a functor */
 };
-main(){
-	new a = 2 in
-	new b = !a in
-	printint((apply <- plus;a;b));
-	printint((apply <- minus;a;b));
-	printint((apply <- lambda x;y { !x * !y };a;b))
+(main <-){
+	new g = 2 in
+	new h = !g in
+	(printint <- (apply <- plus,g,h));
+	(printint <- (apply <- minus,g,h));
+	(printint <- (apply <- lambda x,y { !x * !y },g,h))
 }
 
 

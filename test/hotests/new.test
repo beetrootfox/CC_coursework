@@ -1,14 +1,14 @@
 /* New-binding test. */
-main(){
+(main <-){
 	new a = (if (1 == 1) {10 + 2} else {10 - 2}) in
-	printint(!a); /* prints value stored in a */
-	printint(a); /* prints location of a */
+	(printint <- !a); /* prints value stored in a */
+	(printint <- a); /* prints location of a */
 	new a = 1 in
 	new b = 4 in
-	let f = lambda x;y { if (!x > !y) { x } else { y } } in
-	(f <- a;b) = 100;
-	printint(!a);
-	printint(!b)
+	let f = lambda x,y { if (!x > !y) { x } else { y } } in
+	(f <- a,b) = 100;
+	(printint <- !a);
+	(printint <- !b)
 }
 
 

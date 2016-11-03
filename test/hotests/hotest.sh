@@ -1,12 +1,8 @@
 function test {
 	echo $1
-	./test.native < $2 &> $3
+	./test.native -o < $2 &> $3
 	if [ $? -eq 0 ]; then
-		if [ "$(diff $3 $4)" = "" ]; then
-		echo OK
-		else
-		echo WRONG EVALUATION
-		fi
+		echo "$(diff $3 $4)"
 	else	
 		echo ERROR
 	fi

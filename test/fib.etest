@@ -1,19 +1,19 @@
 /*
 Evaluates a while loop that computes 13th (233)  Fibonacci number.
 */
-main(){
-	x = 0;
-	y = 1;
-	t = 0;
-	n = 0;
+(main <-){
+	new x = 0 in
+	new y = 1 in
+	new t = 0 in
+	new n = 0 in
 	while(!n < 13){
 		t = !y;
 		y = !x + !y;
 		x = !t;
 		n = !n + 1;
-		printint(!x);
+		(printint <- !x)
 	};
-	!x;
+	!x
 }
 
 

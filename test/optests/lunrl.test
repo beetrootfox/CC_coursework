@@ -1,0 +1,18 @@
+/* Tests loop unrolling */
+(fun <- n){
+	let a = n + 5 in
+	let b = n * 2 in
+	if (a > b) {
+		a
+	}else{
+		b
+	}
+};
+(main <-){
+	for(i = 1 to 10){
+		(printint <- (fun <- i))
+	}
+}
+
+
+

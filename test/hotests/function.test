@@ -1,11 +1,11 @@
 /* Tests basic function application */
-sum(a;b){ 
+(sum <- a,b){ 
 	!a + !b /* this function takes pointers as arguments */
 };
-main(){
+(main <-){
 	new a = 12 in
-	new b = 1 in (b = let s = (sum <- a;b) in s);
-	printint(!b)
+	new b = 1 in (b = let s = (sum <- a,b) in s);
+	(printint <- !b)
 }
 
 

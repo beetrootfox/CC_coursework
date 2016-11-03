@@ -1,0 +1,10 @@
+/* Constant propagation test */
+(main <-){
+	let x = 10 in
+	let x = 5 in
+	let y = 7 in
+	if ( x > y ) { 7 * 5 } else { 9 - 3 }
+}
+
+
+

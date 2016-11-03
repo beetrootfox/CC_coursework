@@ -1,9 +1,9 @@
 /*
 Testing assignment evaluation and uniformity.
 */
-main(){
-	(if(1 == 1) { x } else { y }) = (4; (if(1 != 2) { -5 } else { 5 }));
-	!x;
+(main <-){
+	let x = (4; (if(1 != 2) { -5 } else { 5 })) in
+	x
 }
 
 

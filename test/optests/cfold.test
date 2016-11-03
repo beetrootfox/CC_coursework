@@ -1,0 +1,7 @@
+/* Tests constant folding */
+(main <-){
+	if (4 > 5) { 7*5 } else { 9-3 }
+}
+
+
+

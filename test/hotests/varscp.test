@@ -2,7 +2,7 @@
 even though x is defined in the body of main() and is
 later redefined in fib(c), the argument stays the same
 as the main-defined x is out of scope of the fib function. */
-fib(c){
+(fib <- c){
 	new x = 0 in /* this statement does not change main-defined x */
 	new y = 1 in
 	new t = 0 in
@@ -12,11 +12,11 @@ fib(c){
 		y = !x + !y;
 		x = !t;
 		n = !n + 1;
-		printint(!x) 
+		(printint <- !x) 
 	};
 	!x
 };
-main(){
+(main <-){
 	new x = 13 in /* x defined here */
 	(fib <- x)
 }

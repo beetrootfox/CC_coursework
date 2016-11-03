@@ -8,8 +8,8 @@ open Ast
 %token EQ_OP LE_OP GE_OP NE_OP
 %token AND OR NOT
 %token INIT_LOCAL INIT_GLOBAL ASSIGN DEREF IN PIPELINE
-%token IF ELSE WHILE
-%token SEMICOLON LPAREN RPAREN LBRACE RBRACE LBRACKET RBRACKET
+%token IF ELSE WHILE FOR TO
+%token SEMICOLON LPAREN RPAREN LBRACE RBRACE LBRACKET RBRACKET COMMA
 %token <string> IDENTIFIER
 %token LAMBDA
 %token MKARRAY STARRAY OF GET
@@ -39,16 +39,10 @@ prog:
     { el }
 
 fundef:
-    fname = IDENTIFIER; LPAREN; arg_list = separated_list(SEMICOLON, IDENTIFIER); RPAREN; LBRACE; e1 = expression; option(SEMICOLON); RBRACE
+LPAREN; fname = IDENTIFIER; PIPELINE; arg_list = separated_list(COMMA, IDENTIFIER); RPAREN; LBRACE; e1 = expression; option(SEMICOLON); RBRACE
     { fname, arg_list, e1 }
 
 (*TODO: deal with parser error op option(SEMICOLON)*)
-
-opt_exp:
-    |
-    { Empty }
-    | e1 = expression
-    { e1 }
 
 %inline bin_op:
     | PLUS_OP { Plus }
@@ -65,6 +59,8 @@ opt_exp:
 expression:
     | WHILE; LPAREN; e1 = expression; RPAREN; LBRACE; e2 = expression; option(SEMICOLON); RBRACE
     { While (e1, e2) }
+    | FOR; LPAREN; x = IDENTIFIER; ASSIGN; e1 = expression; TO; e2 = expression; RPAREN; LBRACE; e3 = expression; RBRACE;
+    { For (x, e1, e2, e3) }
     | IF; LPAREN; e1 = expression; RPAREN; LBRACE; e2 = expression; option(SEMICOLON); RBRACE
     { If (e1, e2, Empty) }
     | IF; LPAREN; e1 = expression; RPAREN; LBRACE; e2 = expression; option(SEMICOLON); RBRACE; ELSE; LBRACE; e3 = expression; option(SEMICOLON); RBRACE
@@ -79,13 +75,13 @@ expression:
     { Bin_Operator (Minus, Empty, e1) }
     | NOT; e1 = expression
     { Unary_Operator (Not, e1) }
-    | LPAREN; e1 = expression; PIPELINE; e2 = opt_exp; RPAREN
-    { Application (e1, e2) }
+    | LPAREN; e1 = expression; PIPELINE; arg_list = separated_list(COMMA, expression); RPAREN
+    { Application (e1, arg_list) }
     | n = INT
     { Const n }
     | READ_INT
     { Readint }
-    | PRINT_INT; LPAREN; e1 = expression; RPAREN
+    | LPAREN; PRINT_INT; PIPELINE; e1 = expression; RPAREN
     { Printint e1 }
     | x = IDENTIFIER
     { Identifier x }
@@ -97,7 +93,7 @@ expression:
     { e1 }
     | e1 = expression; SEMICOLON; e2 = expression
     { Seq (e1, e2) }
-    | LAMBDA; args = separated_list(SEMICOLON, IDENTIFIER); LBRACE; e = expression; RBRACE;
+    | LAMBDA; args = separated_list(COMMA, IDENTIFIER); LBRACE; e = expression; RBRACE;
     { Lambda (args, e) }
     | MKARRAY; x = IDENTIFIER; LBRACKET; e1 = expression; RBRACKET; OF; e2 = expression; IN; e3 = expression
     { Array_make (x, e1, e2, e3) }

@@ -1,20 +1,20 @@
 /* Tests arrays: create, set elements, get elements. */
-main(){
-        let loop = lambda x;l {             
+(main <-){
+        let loop = lambda x,l {             
                         new n = 0 in
                         while(!n < l){
-                                printint(get x[!n]);
+                                (printint <- get x[!n]);
                                 n = !n + 1
                         }
                    }
         in arraymake arr[10] of 0 in
-        (loop <- arr;10);
+        (loop <- arr,10);
         new n = 0 in
         while(!n < 10){
                 arrayset arr[!n] = 3;
                 n = !n + 1
         };
-        (loop <- arr;10)
+        (loop <- arr,10)
 }
 
 

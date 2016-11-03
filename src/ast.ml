@@ -11,12 +11,13 @@ type expression =
     | Empty
     | Seq of expression * expression (* e; e *)
     | While of expression * expression (* while e do e *)
+    | For of string * expression * expression * expression (* for x = e to e do e*)
     | If of expression * expression * expression (* if e do e else e *)
     | Asg of expression * expression (* e := e *)
     | Deref of expression (* !e *)
     | Bin_Operator of bin_opcode * expression * expression (* e + e *)
     | Unary_Operator of unary_opcode * expression (* not e *)
-    | Application of expression * expression (* e(e) *)
+    | Application of expression * expression list (* e(e) *)
     | Const of int (* 7 *)
     | Readint (* read_int () *)
     | Printint of expression (* print_int (e) *)
@@ -74,12 +75,13 @@ let rec exp_to_string = function
 | Empty -> "Empty"
 | Seq (e1, e2) -> String.concat "" ["Seq("; exp_to_string e1; ","; exp_to_string e2; ")"]
 | While (e1, e2) -> String.concat "" ["While("; exp_to_string e1; ","; exp_to_string e2; ")"]
+| For (s, e1, e2, e3) -> ("For(" ^ s ^","^ exp_to_string e1 ^ "," ^ exp_to_string e2 ^ "," ^ exp_to_string e3 ^ ")")
 | If (e1, e2, e3) -> String.concat "" ["If("; exp_to_string e1; ","; exp_to_string e2; ","; exp_to_string e3; ")"]
 | Asg (e1, e2) -> String.concat "" ["Asg("; exp_to_string e1; ","; exp_to_string e2; ")"]
 | Deref e1 -> String.concat "" ["Deref("; exp_to_string e1; ")"]
 | Bin_Operator (op, e1, e2) -> String.concat "" ["Bin_Operator("; op_to_string op; ","; exp_to_string e1; ","; exp_to_string e2; ")"]
 | Unary_Operator (op, e1) -> String.concat "" ["Unary_Operator("; unop_to_string op; ","; exp_to_string e1; ")"]
-| Application (e1, e2) -> String.concat "" ["Application("; exp_to_string e1; ","; exp_to_string e2; ")"]
+| Application (e1, e2) -> String.concat "" ["Application("; exp_to_string e1; ","; " expression list)"]
 | Const n -> String.concat "" ["Const("; string_of_int n; ")"]
 | Readint -> "readint()"
 | Printint e1 -> String.concat "" ["printint("; exp_to_string e1; ")"]

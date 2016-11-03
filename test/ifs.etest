@@ -1,13 +1,13 @@
 /*
 Tests evaluation of conditionals.
 */
-main(){
-	x = 10;
-	y = 11;
-	if(!x > !y){
-		x;
+(main <-){
+	let x = 10 in
+	let y = 11 in
+	if(x > y){
+		x
 	}else{
-		y;
+		y
 	}
 }
 
