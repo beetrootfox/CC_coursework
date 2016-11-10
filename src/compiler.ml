@@ -11,6 +11,10 @@ let acc = ref Nothing
 let stack_base = ref 500
 let heap_base = ref 499
 
+let rr = 500
+let _ = Hashtbl.replace ram rr (Constant 99)
+let wr = 499
+
 let si = 500
 
 
@@ -136,8 +140,7 @@ let rec interpret symt = function
 | Deref e         ->
     let haddr = interpret symt e in
     if haddr < si then let addr = inc_stp () in
-                    INA.ldr_ins haddr;
-                    INA.st_ins addr;
+                    INA.mv_ins haddr addr;
                     addr
     else err_exit ("could not dereference address" ^ (string_of_int haddr))
 | Bin_Operator (op, e1, e2) ->
@@ -226,29 +229,33 @@ let rec interpret symt = function
         INA.st_ins addr;
         addr
 | Identifier x ->
-        let addr' = inc_stp () in
         let addr = (try lookup x symt with
                                 | Not_found ->
+                                    let addr' = inc_stp () in
                                     INA.ldc_ins (Id x);
                                     INA.st_ins addr';
                                     addr') in
-        INA.mv_ins addr addr';
-        addr
+        if addr < si then addr
+        else (
+                let addr' = inc_stp () in
+                INA.mv_ins addr addr'; addr'
+             )
 | Empty -> !stack_base
-| Printint e -> !stack_base
-        (*let v = eval_exp env e in
-        Printf.printf ("%s\n") (value_to_string v); Command*)
+| Printint e -> let sp = !stack_base in
+                let addr = interpret symt e in
+                INA.mv_ins addr wr;
+                sp
 | Let (x, e1, e2) ->
         let addr1 = interpret symt e1 in
         let addr2 = interpret ((x, addr1) :: symt) e2 in
-                    INA.mv_ins addr2 addr1;
+            if addr1 < si then addr2 else 
+                   ( INA.mv_ins addr2 addr1;
                     stack_base := addr1;
-                    addr1
+                    addr1)
 | New (x, e1, e2) ->
         let addr1 = interpret symt e1 in
         let haddr = inc_hpp () in
-        INA.ldr_ins addr1;
-        INA.st_ins haddr;
+        INA.mv_ins addr1 haddr;
         let addr2 = interpret ((x, haddr)::symt) e2 in
         heap_base := !heap_base - 1;
         INA.mv_ins addr2 addr1;
@@ -312,8 +319,8 @@ let rec interpret symt = function
                                          | Invalid_argument s -> err_exit "Array index out of bounds!")
                         | _          -> err_exit "Array index must be an int!")
          | _    -> err_exit "Array name must be an identifier!")*)
-| Readint -> !stack_base (*(match !readfeed with
-              | []    -> err_exit "No integers to read!"
-              | x::xs -> readfeed := xs; Constant x)*)
+| Readint -> let addr = inc_stp () in
+             INA.mv_ins rr addr;
+             addr
 end
 ;;

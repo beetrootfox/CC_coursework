@@ -79,7 +79,7 @@ let unary_op_ins op addr = "neg r" ^ (string_of_int addr) ^ "\n" |> Buffer.add_s
 
 let st_ins addr = "st r" ^ (string_of_int addr)
 ^ "\n" |> Buffer.add_string code
-let ldc_ins n = "ld " ^ (value_to_string n)
+let ldc_ins n = "ld " ^ (value_to_string' n)
 ^ "\n" |> Buffer.add_string code
 let ldr_ins addr = "ld r" ^ (string_of_int addr)
 ^ "\n" |> Buffer.add_string code
@@ -108,13 +108,17 @@ let rec read_to_empty buf =
 let opt = let len = Array.length Sys.argv in
           if len > 1 then Sys.argv.(1) = "-o" else false
 
-let _ =
+let addr =
     read_to_empty (Buffer.create 1)
     |> Buffer.contents
     |> Lexing.from_string
     |> parse_with_error
     (*|> (if opt then fundef_to_value_str_opt else fundef_to_value_str)*)
-|> generate;
-Buffer.output_buffer stdout code;
+    (*
+    |> compile|> Hashtbl.find ram |> value_to_string |> print_endline;
+    *)
+    |> generate
+let _ = Buffer.output_buffer stdout code;
+"ld r" ^ (string_of_int addr) |> print_endline;
     Printf.printf "%d\n" !eval_steps
 ;;
