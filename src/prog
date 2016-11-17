@@ -1,0 +1,15 @@
+/* x86 basic compilation test */
+(main <-){
+	let x = 5 in /* let definition */
+	x / 2;	/* division */
+	new p1 = 4 in /* pointers and assignment */
+	new p2 = p1 in
+	new p3 = p2 in
+	!!p3 = 8;
+	!!!p3 - 2; /* sequencing and operators */
+	!!!p3 + 2;
+	!!!p3 * 2
+}
+
+
+

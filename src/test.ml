@@ -9,6 +9,7 @@ open Evaluator
 open Optimizer
 open Compiler
 open Hashtbl
+open X86_compiler
 
 (*let fundef_to_string (s, sl, exp) = String.concat "" ["fundef("; s; ",["; String.concat ";" sl; "],"; exp_to_string exp; ")"]*)
 
@@ -67,6 +68,8 @@ end)
 
 let code = Buffer.create 1000
 
+let _ = Buffer.add_string code prefix
+
 module GenCode = Interpreter(struct
 
 let op_ins op addr1 addr2 =
@@ -87,10 +90,70 @@ let mv_ins addr1 addr2 = "mv r" ^ (string_of_int addr1)
                           ^ ", r" ^ (string_of_int addr2) ^ "\n" |> Buffer.add_string code
 end)
 
+module Gen_x86 = Compiler86(struct
+
+let op_ins op = (match op with
+    | Divide ->
+        "popq %rbx\n" ^
+        "popq %rax\n" ^
+        "cqto\n" ^
+        (x86_str_of_operator op) ^ " %rbx\n" ^
+        "push %rax\n" |> Buffer.add_string code
+    | _ ->
+        "popq %rax\n" ^
+        "popq %rbx\n" ^
+        (x86_str_of_operator op) ^ " %rax, %rbx\n" ^
+        "push %rbx\n" |> Buffer.add_string code)
+
+let id_ins addr =
+    "//offset " ^ (string_of_int addr) ^ "\n" ^
+    "movq " ^ (-16 - 8 * addr |> string_of_int) ^ "(%rbp), %rax\n" ^
+    "push %rax\n"
+    |> Buffer.add_string code
+
+let st_ins n =
+    "push $" ^ (string_of_int n) ^ "\n"
+    |> Buffer.add_string code
+
+let let_ins () =
+    "pop %rax\n" ^
+    "pop %rbx\n" ^
+    "push %rax\n"
+    |> Buffer.add_string code
+
+let lea_ins addr =
+    "leaq " ^ (-16 - 8 * addr |> string_of_int) ^ "(%rbp), %rax\n" ^
+    "push %rax\n"
+    |> Buffer.add_string code
+
+let new_ins () =
+    "pop %rax\n" ^
+    "pop %rbx\n" ^
+    "pop %rcx\n" ^
+    "push %rax\n"
+    |> Buffer.add_string code
+
+let deref_ins () =
+    "pop %rax\n" ^
+    "movq (%rax), %rax\n" ^
+    "push %rax\n"
+    |> Buffer.add_string code
+
+let asg_ins () =
+    "pop %rbx\n" ^
+    "pop %rax\n" ^
+    "movq %rbx, (%rax)\n" ^
+    "push %rbx\n"
+    |> Buffer.add_string code
+
+end)
+
 let compile flist = let (_, exp) = eval_prog ("",Empty) flist in
 Interp.interpret [] exp
 let generate flist = let (_, exp) = eval_prog ("", Empty) flist in
 GenCode.interpret [] exp
+let compile_x86 flist = let (_, exp) = eval_prog ("", Empty) flist in
+Gen_x86.codegen [] exp
 
 let parse_with_error lexbuf =
     try Parser.prog Lexer.read lexbuf with
@@ -117,8 +180,8 @@ let addr =
     (*
     |> compile|> Hashtbl.find ram |> value_to_string |> print_endline;
     *)
-    |> generate
+    |> compile_x86
 let _ = Buffer.output_buffer stdout code;
-"ld r" ^ (string_of_int addr) |> print_endline;
-    Printf.printf "%d\n" !eval_steps
+postfix |> print_endline;
+   (* Printf.printf "%d\n" !eval_steps *)
 ;;

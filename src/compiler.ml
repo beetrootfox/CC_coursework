@@ -140,8 +140,8 @@ let rec interpret symt = function
 | Deref e         ->
     let haddr = interpret symt e in
     if haddr < si then let addr = inc_stp () in
-                    INA.mv_ins haddr addr;
-                    addr
+                       INA.mv_ins haddr addr;
+                       addr
     else err_exit ("could not dereference address" ^ (string_of_int haddr))
 | Bin_Operator (op, e1, e2) ->
     let addr1 = interpret symt e1 in
@@ -273,7 +273,7 @@ let rec interpret symt = function
                                              eval_exp env' exp
                      | _  -> err_exit (exp_to_string e ^ " must be a lambda function"))
         | _    -> err_exit (exp_to_string e1 ^ " is not a function!"))*)
-| Lambda (args, e) as l -> !stack_base (*Func l*)
+| Lambda (args, e) -> !stack_base (*Func l*)
 | Array_make (x,e1,e2,e3) -> !stack_base
         (*let index = eval_exp env e1 in
         (match index with
