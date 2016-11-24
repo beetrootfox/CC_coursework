@@ -42,6 +42,57 @@ Ltmp5:
 subq    $16, %rsp
 movl    $260, %edi              ## imm = 0x104
 movl    $0, -4(%rbp)
+push $0
+leaq -24(%rbp), %rax
+push %rax
+L1:
+//offset 2
+movq -32(%rbp), %rax
+push %rax
+pop %rax
+movq (%rax), %rax
+push %rax
+push $20
+pop %rbx
+pop %rax
+cmpq %rbx, %rax
+jge L3
+L2:
+//offset 2
+movq -32(%rbp), %rax
+push %rax
+//offset 2
+movq -32(%rbp), %rax
+push %rax
+pop %rax
+movq (%rax), %rax
+push %rax
+push $1
+pop %rax
+pop %rbx
+addq %rax, %rbx
+push %rbx
+pop %rbx
+pop %rax
+movq %rbx, (%rax)
+push %rbx
+pop %rax
+jmp L1
+L3:
+push $0
+//offset 2
+movq -32(%rbp), %rax
+push %rax
+pop %rax
+movq (%rax), %rax
+push %rax
+pop %rax
+pop %rbx
+push %rax
+pop %rax
+pop %rbx
+pop %rcx
+push %rax
 
 pop     %rdi
 callq   _print

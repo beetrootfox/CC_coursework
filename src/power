@@ -1,0 +1,16 @@
+(power <- b, r){
+	if(!r != 1){
+		r = !r - 1;       
+		b * (power <- b, r)
+	}else{
+		b
+	}
+};
+(main <-){
+	let n = 2 in
+	new p = 10 in
+	let ans = (power <- n, p) in
+	ans
+}
+
+
