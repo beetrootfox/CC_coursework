@@ -25,81 +25,6 @@ xorl    %edi, %edi
 movl    %eax, -8(%rbp)          ## 4-byte Spill
 callq   _exit
 .cfi_endproc
-.globl _power
-.align 4, 0x90
-_power:
-.cfi_startproc
-pushq %rbp
-.cfi_def_cfa_offset 16
-.cfi_offset %rbp, -16
-movq %rsp, %rbp
-.cfi_def_cfa_register %rbp
-subq $32, %rsp
-movq %rdi, -16(%rbp)
-movq %rsi, -24(%rbp)
-//offset 1
-movq -24(%rbp), %rax
-push %rax
-pop %rax
-movq (%rax), %rax
-push %rax
-push $1
-pop %rbx
-pop %rax
-cmpq %rbx, %rax
-je L2
-L1:
-//offset 1
-movq -24(%rbp), %rax
-push %rax
-//offset 1
-movq -24(%rbp), %rax
-push %rax
-pop %rax
-movq (%rax), %rax
-push %rax
-push $1
-pop %rax
-pop %rbx
-subq %rax, %rbx
-push %rbx
-pop %rbx
-pop %rax
-movq %rbx, (%rax)
-push %rbx
-//offset 0
-movq -16(%rbp), %rax
-push %rax
-//offset 0
-movq -16(%rbp), %rax
-push %rax
-pop %rax
-movq %rax, %rdi
-//offset 1
-movq -24(%rbp), %rax
-push %rax
-pop %rax
-movq %rax, %rsi
-callq _power
-push %rax
-pop %rax
-pop %rbx
-imulq %rax, %rbx
-push %rbx
-pop %rax
-pop %rbx
-push %rax
-jmp L3
-L2:
-//offset 0
-movq -16(%rbp), %rax
-push %rax
-L3:
-pop %rax
-addq $32, %rsp
-popq %rbp
-retq
-.cfi_endproc
 
 .globl  _main
 .align  4, 0x90
@@ -117,24 +42,99 @@ Ltmp5:
 subq    $16, %rsp
 movl    $260, %edi              ## imm = 0x104
 movl    $0, -4(%rbp)
-push $2
-push $10
-leaq -32(%rbp), %rax
-push %rax
+push $5
 //offset 1
 movq -24(%rbp), %rax
 push %rax
+push $2
+pop %rbx
 pop %rax
-movq %rax, %rdi
-//offset 3
-movq -40(%rbp), %rax
+cqto
+idivq %rbx
 push %rax
-pop %rax
-movq %rax, %rsi
-callq _power
+push $4
+leaq -40(%rbp), %rax
 push %rax
 //offset 4
 movq -48(%rbp), %rax
+push %rax
+leaq -56(%rbp), %rax
+push %rax
+//offset 6
+movq -64(%rbp), %rax
+push %rax
+leaq -72(%rbp), %rax
+push %rax
+//offset 8
+movq -80(%rbp), %rax
+push %rax
+pop %rax
+movq (%rax), %rax
+push %rax
+pop %rax
+movq (%rax), %rax
+push %rax
+push $8
+pop %rbx
+pop %rax
+movq %rbx, (%rax)
+push %rbx
+//offset 8
+movq -80(%rbp), %rax
+push %rax
+pop %rax
+movq (%rax), %rax
+push %rax
+pop %rax
+movq (%rax), %rax
+push %rax
+pop %rax
+movq (%rax), %rax
+push %rax
+push $2
+pop %rax
+pop %rbx
+subq %rax, %rbx
+push %rbx
+//offset 8
+movq -80(%rbp), %rax
+push %rax
+pop %rax
+movq (%rax), %rax
+push %rax
+pop %rax
+movq (%rax), %rax
+push %rax
+pop %rax
+movq (%rax), %rax
+push %rax
+push $2
+pop %rax
+pop %rbx
+addq %rax, %rbx
+push %rbx
+//offset 8
+movq -80(%rbp), %rax
+push %rax
+pop %rax
+movq (%rax), %rax
+push %rax
+pop %rax
+movq (%rax), %rax
+push %rax
+pop %rax
+movq (%rax), %rax
+push %rax
+push $2
+pop %rax
+pop %rbx
+imulq %rax, %rbx
+push %rbx
+pop %rax
+pop %rbx
+push %rax
+pop %rax
+pop %rbx
 push %rax
 pop %rax
 pop %rbx
@@ -142,6 +142,17 @@ push %rax
 pop %rax
 pop %rbx
 pop %rcx
+push %rax
+pop %rax
+pop %rbx
+pop %rcx
+push %rax
+pop %rax
+pop %rbx
+pop %rcx
+push %rax
+pop %rax
+pop %rbx
 push %rax
 pop %rax
 pop %rbx

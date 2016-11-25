@@ -1,0 +1,13 @@
+(main <-){
+	new x = 0 in
+	while (!x < 20){
+		if(!x == 12){
+			break
+		}else{
+			x = !x + 1
+		}
+	};
+	!x      
+}
+
+
