@@ -7,7 +7,7 @@ open Printf
 
 let hash =
 [
-"new", INIT_LOCAL; "let", INIT_GLOBAL; "if", IF; "else", ELSE; "while", WHILE; "in", IN; "lambda", LAMBDA; "arraymake", MKARRAY; "arrayset", STARRAY; "of", OF; "get", GET;
+"new", INIT_LOCAL; "let", INIT_GLOBAL; "if", IF; "else", ELSE; "while", WHILE; "in", IN; "lambda", LAMBDA; "arraymake", MKARRAY; "arrayset", STARRAY; "get", GET;
 "for", FOR; "to", TO; "break", BREAK
 ]
 
@@ -18,7 +18,7 @@ let print_position lexbuf =
 }
 
 let int = ['0'-'9']['0'-'9']*
-let id = ['a'-'z' 'A'-'Z' '_']['a'-'z' 'A'-'Z' '0'-'9' '_']*
+let id = '&'?['a'-'z' 'A'-'Z' '_']['a'-'z' 'A'-'Z' '0'-'9' '_']*
 let white = [' ' '\t']+
 let newline = '\r' | '\n' | "\r\n"
 
@@ -38,8 +38,8 @@ rule read =
 | "<-"          { PIPELINE }
 | '['           { LBRACKET }
 | ']'           { RBRACKET }
-| '&'           { AND }
-| '|'           { OR }
+| "&&"           { AND }
+| "||"           { OR }
 | '~'           { NOT }
 | "!="          { NE_OP }
 | ','           { COMMA }

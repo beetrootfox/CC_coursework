@@ -274,7 +274,7 @@ let rec interpret symt = function
                      | _  -> err_exit (exp_to_string e ^ " must be a lambda function"))
         | _    -> err_exit (exp_to_string e1 ^ " is not a function!"))*)
 | Lambda (args, e) -> !stack_base (*Func l*)
-| Array_make (x,e1,e2,e3) -> !stack_base
+| Array_make (x,e1,e2) -> !stack_base
         (*let index = eval_exp env e1 in
         (match index with
          | Constant n -> let first = eval_exp env e2 in

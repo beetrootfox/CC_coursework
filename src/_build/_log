@@ -1,6 +1,6 @@
 ### Starting build.
 # Target: test.ml.depends, tags: { extension:ml, file:test.ml, ocaml, ocamldep, quiet }
-ocamlfind ocamldep -modules test.ml > test.ml.depends # cached
+ocamlfind ocamldep -modules test.ml > test.ml.depends
 # Target: ast.ml.depends, tags: { extension:ml, file:ast.ml, ocaml, ocamldep, quiet }
 ocamlfind ocamldep -modules ast.ml > ast.ml.depends # cached
 # Target: ast.cmo, tags: { byte, compile, extension:cmo, extension:ml, file:ast.cmo, file:ast.ml, implem, ocaml, quiet }
@@ -36,7 +36,7 @@ ocamlfind ocamldep -modules x86_compiler.ml > x86_compiler.ml.depends # cached
 # Target: x86_compiler.cmo, tags: { byte, compile, extension:cmo, extension:ml, file:x86_compiler.cmo, file:x86_compiler.ml, implem, ocaml, quiet }
 ocamlfind ocamlc -c -o x86_compiler.cmo x86_compiler.ml # cached
 # Target: test.cmo, tags: { byte, compile, extension:cmo, extension:ml, file:test.cmo, file:test.ml, implem, ocaml, quiet }
-ocamlfind ocamlc -c -o test.cmo test.ml # cached
+ocamlfind ocamlc -c -o test.cmo test.ml
 # Target: ast.cmx, tags: { compile, extension:cmx, extension:ml, file:ast.cmx, file:ast.ml, implem, native, ocaml, quiet }
 ocamlfind ocamlopt -c -o ast.cmx ast.ml # cached
 # Target: evaluator.cmx, tags: { compile, extension:cmx, extension:ml, file:evaluator.cmx, file:evaluator.ml, implem, native, ocaml, quiet }
@@ -54,7 +54,7 @@ ocamlfind ocamlopt -c -o optimizer.cmx optimizer.ml # cached
 # Target: x86_compiler.cmx, tags: { compile, extension:cmx, extension:ml, file:x86_compiler.cmx, file:x86_compiler.ml, implem, native, ocaml, quiet }
 ocamlfind ocamlopt -c -o x86_compiler.cmx x86_compiler.ml # cached
 # Target: test.cmx, tags: { compile, extension:cmx, extension:ml, file:test.cmx, file:test.ml, implem, native, ocaml, quiet }
-ocamlfind ocamlopt -c -o test.cmx test.ml # cached
+ocamlfind ocamlopt -c -o test.cmx test.ml
 # Target: test.native, tags: { dont_link_with, extension:native, file:test.native, link, native, ocaml, program, quiet }
-ocamlfind ocamlopt -linkpkg ast.cmx evaluator.cmx compiler.cmx parser.cmx lexer.cmx optimizer.cmx x86_compiler.cmx test.cmx -o test.native # cached
+ocamlfind ocamlopt -linkpkg ast.cmx evaluator.cmx compiler.cmx parser.cmx lexer.cmx optimizer.cmx x86_compiler.cmx test.cmx -o test.native
 # Compilation successful.

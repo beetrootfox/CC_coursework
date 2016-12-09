@@ -6,7 +6,6 @@
                 y = !x + !y;
                 x = !t;
                 n = !n - 1;
-                (printint <- !x);
                 (fib <- x,y,n)
         }else{
                 !x
@@ -15,7 +14,7 @@
 (main <-){
         new x = 0 in
         new y = 1 in
-        new n = 14 in
+        new n = 13 in
         (fib <- x,y,n)
 }
 

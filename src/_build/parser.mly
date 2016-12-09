@@ -12,7 +12,7 @@ open Ast
 %token SEMICOLON LPAREN RPAREN LBRACE RBRACE LBRACKET RBRACKET COMMA BREAK
 %token <string> IDENTIFIER
 %token LAMBDA
-%token MKARRAY STARRAY OF GET
+%token MKARRAY STARRAY GET
 %token EOF
 
 %left IN
@@ -95,8 +95,8 @@ expression:
     { Seq (e1, e2) }
     | LAMBDA; args = separated_list(COMMA, IDENTIFIER); LBRACE; e = expression; RBRACE;
     { Lambda (args, e) }
-    | MKARRAY; x = IDENTIFIER; LBRACKET; e1 = expression; RBRACKET; OF; e2 = expression; IN; e3 = expression
-    { Array_make (x, e1, e2, e3) }
+    | MKARRAY; x = IDENTIFIER; LBRACKET; e1 = expression; RBRACKET; IN; e2 = expression
+    { Array_make (x, e1, e2) }
     | GET; e1 = expression; LBRACKET; e2 = expression; RBRACKET
     { Array_get (e1, e2) }
     | STARRAY; e1 = expression; LBRACKET; e2 = expression; RBRACKET; ASSIGN; e3 = expression

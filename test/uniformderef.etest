@@ -2,8 +2,8 @@
 Tests evaluation and uniformity of dereferencig.
 */
 (main <-){
-	new x = var1 in
-	new y = var2 in
+	new x = 9 in
+	new y = 7 in
 	!(if(0 == 0) { x } else { y })
 }
 

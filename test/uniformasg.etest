@@ -2,7 +2,7 @@
 Testing assignment evaluation and uniformity.
 */
 (main <-){
-	let x = (4; (if(1 != 2) { -5 } else { 5 })) in
+	let x = (4; (if(1 == 2) { 55 } else { 5 })) in
 	x
 }
 

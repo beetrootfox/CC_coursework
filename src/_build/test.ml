@@ -19,8 +19,7 @@ let fundef_to_value_str flist = let (_, exp) = eval_prog ("",Empty) flist in
 
 (*let fundef_to_value_str flist = let (_, exp) = eval_prog ("",Empty) flist in
                exp |> optimise_exp [] |> exp_of_val |> exp_to_string*)
-let fundef_to_value_str_opt flist = let (_, exp) = eval_prog ("",Empty) flist in
-exp |> optimise_exp [] |> exp_of_val |> eval_exp [] |> value_to_string
+
 
 
 (*let fun_of_op op = match op with
@@ -112,6 +111,11 @@ let id_ins addr =
     "push %rax\n"
     |> Buffer.add_string code
 
+let pushfptr fname =
+    "leaq _" ^ fname ^ "(%rip), " ^ "%rax\n" ^
+    "push %rax\n"
+    |> Buffer.add_string code
+
 let st_ins n =
     "push $" ^ (string_of_int n) ^ "\n"
     |> Buffer.add_string code
@@ -136,6 +140,11 @@ let push_ins () =
 
 let svarg r addr =
     "movq %" ^ r ^ ", " ^ (-16 - 8 * addr |> string_of_int) ^ "(%rbp)\n"
+    |> Buffer.add_string code
+
+let svstackarg addr_f addr_t =
+    "movq " ^ (16 + 8 * addr_f |> string_of_int) ^ "(%rbp), %r9\n" ^
+    "movq %r9, " ^ (-16 - 8 * addr_t |> string_of_int) ^ "(%rbp)\n"
     |> Buffer.add_string code
 
 let ldarg r =
@@ -167,6 +176,18 @@ let handle_ret () =
     "push %rax\n"
     |> Buffer.add_string code
 
+let rec cut_stack n =
+    if n > 0 then (
+    "pop %r8\n"
+    |> Buffer.add_string code;
+    cut_stack (n-1)
+    )
+    else ()
+
+let callfptr addr =
+    "callq *" ^ (-16 - 8 * addr |> string_of_int) ^ "(%rbp)\n"
+    |> Buffer.add_string code
+
 let call fname =
     "callq _" ^ fname ^ "\n"
     |> Buffer.add_string code
@@ -196,6 +217,28 @@ let asg_ins () =
     "push %rbx\n"
     |> Buffer.add_string code
 
+let print () =
+    "pop %rdi\n" ^
+    "callq _printint\n" ^
+    "push $0\n"
+    |> Buffer.add_string code
+
+let mkarray () =
+    "pop %rbx\n" ^
+    "movq %rsp, %rax\n" ^
+    "push %rax\n" ^
+    "subq %rbx, %rax\n" ^
+    "movq %rax, %rsp\n"
+    |> Buffer.add_string code
+
+let array_gc () =
+    "pop %rax\n" ^
+    "pop %rbx\n" ^
+    "movq %rbx, %rsp\n" ^
+    "push %rax\n"
+    |> Buffer.add_string code
+
+
 let cmp_ins (l1,l2,direction) op =
     "pop %rbx\n" ^
     "pop %rax\n" ^
@@ -222,9 +265,17 @@ let compile flist = let (_, exp) = eval_prog ("",Empty) flist in
 Interp.interpret [] exp
 let generate flist = let (_, exp) = eval_prog ("", Empty) flist in
 GenCode.interpret [] exp
+let opt = let len = Array.length Sys.argv in
+if len > 1 then Sys.argv.(1) = "-o" else false
 let compile_x86 flist = let (_, exp) = Gen_x86.fungen ("", Empty) flist in
 Buffer.add_string code prefix2;
+if opt then (
+let (_, exp) = eval_prog ("", Empty) flist in
+exp |> optimise_exp [] |> exp_of_val |> Gen_x86.codegen [] []
+) else
 Gen_x86.codegen [] [] exp
+let fundef_to_value_str_opt flist = let (_, exp) = eval_prog ("",Empty) flist in
+exp |> optimise_exp [] |> exp_of_val |> eval_exp [] |> value_to_string
 
 let parse_with_error lexbuf =
     try Parser.prog Lexer.read lexbuf with
@@ -239,8 +290,6 @@ let rec read_to_empty buf =
           Buffer.add_string buf "\n";
           read_to_empty buf)
 
-let opt = let len = Array.length Sys.argv in
-          if len > 1 then Sys.argv.(1) = "-o" else false
 
 let addr =
     read_to_empty (Buffer.create 1)

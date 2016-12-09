@@ -172,7 +172,7 @@ and optimise_exp env = function
                      | _  -> err_exit (exp_to_string e ^ " must be a lambda function"))
         | _    -> err_exit (exp_to_string e1 ^ " is not a function!"))
 | Lambda (args, e) as l -> Func l
-| Array_make (x,e1,e2,e3) -> Opt (Array_make(x, optimise_exp env e1 |> exp_of_val, optimise_exp env e2 |> exp_of_val, optimise_exp env e3 |> exp_of_val))
+| Array_make (x,e1,e2) -> Opt (Array_make(x, optimise_exp env e1 |> exp_of_val, optimise_exp env e2 |> exp_of_val))
 | Array_set (e1, e2, e3) -> Opt (Array_set(optimise_exp env e1 |> exp_of_val, optimise_exp env e2 |> exp_of_val, optimise_exp env e3 |> exp_of_val))
 | Array_get (e1, e2) -> Opt (Array_get (optimise_exp env e1 |> exp_of_val, optimise_exp env e2 |> exp_of_val))
 | Readint -> Opt (Readint)

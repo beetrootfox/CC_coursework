@@ -7,7 +7,7 @@
 	}
 };
 (main <-){
-	let n = 2 in
+	let n = 3 in
 	new p = 10 in
 	let ans = (power <- n, p) in
 	ans

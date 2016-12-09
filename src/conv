@@ -1,0 +1,38 @@
+(convolve <- &fun1, &fun2, range1, range2){
+		new n = 0 in
+		new sum = 0 in
+                while(!n < range1 + range2){
+                	new kmin = 0 in
+                	new kmax = 0 in
+                	new k = 0 in
+                	if(!n > range2){
+                        	kmin = !n - range2
+                	}else{
+                        	kmin = 0
+                	};
+                	if(!n < range1){
+                        	kmax = !n - range1
+                	}else{
+                        	kmax = range1
+                	};
+                	k = !kmin;
+                	while(!k < !kmax){
+				sum = !sum + (&fun1 <- !k) * (&fun2 <- !n - !k);
+                        	k = !k + 1
+                	};
+        	       	n = !n + 1
+        	};
+		!sum
+};
+(fun1 <- n){
+	n + n
+};
+(fun2 <- n){
+	(n + 10) / 2
+};
+(main <-){
+	(convolve <- fun2, fun1, 13, 10)
+}
+
+
+

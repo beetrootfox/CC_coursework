@@ -15,7 +15,6 @@ type token =
   | PLUS_OP
   | PIPELINE
   | OR
-  | OF
   | NOT
   | NE_OP
   | MKARRAY

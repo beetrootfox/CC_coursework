@@ -7,7 +7,8 @@ see fib.etest
 	new x = 10 in
 	while(!x > 0){
 		x = !x - 1
-	}
+	};
+	!x
 }
 
 

@@ -3,6 +3,6 @@ Tests evaluation and uniformity of binary operators.
 Must evaluate to 4.
 */
 (main <-){
-	(if(~(1 > 2) & (2 > 3)) { 3 } else { -3 }) + 7
+	(if((1 < 2) && (2 > 3)) { 3 } else { 33 }) + 7
 }
 

@@ -4,7 +4,7 @@ Tests evaluation of sequences.
 (main <-){
 	let x = 2 in
 	let x = 3 in
-	let x = -1 in x
+	let x = 11 in x
 }
 
 

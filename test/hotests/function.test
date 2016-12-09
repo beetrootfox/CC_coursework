@@ -4,8 +4,8 @@
 };
 (main <-){
 	new a = 12 in
-	new b = 1 in (b = let s = (sum <- a,b) in s);
-	(printint <- !b)
+	new b = 1 in 
+	(printint <- (sum <- a, b))
 }
 
 

@@ -221,14 +221,14 @@ and eval_exp env = inc_evstps (); function
                      | _  -> err_exit (exp_to_string e ^ " must be a lambda function"))
         | _    -> err_exit (exp_to_string e1 ^ " is not a function!"))
 | Lambda (args, e) as l -> Func l
-| Array_make (x,e1,e2,e3) ->
-        let index = eval_exp env e1 in
+| Array_make (x,e1,e2) -> err_exit " "
+      (*  let index = eval_exp env e1 in
         (match index with
          | Constant n -> let first = eval_exp env e2 in
                          let ar = Array.make n first in
                          Hashtbl.replace arrays x ar;
                          let v2 = eval_exp env e3 in Hashtbl.remove arrays x; v2
-         | _           -> err_exit "Array length must be an integer!")
+         | _           -> err_exit "Array length must be an integer!")*)
 | Array_set (e1, e2, e3) ->
         let name = eval_exp env e1 in
         (match name with
