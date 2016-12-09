@@ -4,21 +4,9 @@
 `make` will build the project. It may fail if you already have _build directory and/or test.native,
 in this case run `make clean` and then `make`
 
-`make tests` will run 14 parser tests:
+`make` will build the project. It may fail if you already have `_build` directory and/or `test.native`, in this case run `make clean` and then `make`
 
-        10 tests of basic functionality
-        2 tests of bisection algorithms implementations
-        2 tests of parse/syntax error messages
-        
-and 11 evaluation tests:
-
-        9 tests of basic functionality
-        2 tests of runtime error messages
-        1 tests of fibonacci sequence computation
-        
-Output of parser tests is saved in `.log` files in `test` directory, evaluation tests have their output saved in `.elog` files.
-Parser tests will produce `ERROR` output in response to a `Runtime error` or a `Parsing/Syntax error` and `OK` if tests pass.
-Evaluation tests will produce `ERROR` in case of errors and `OK` if they pass, also, `WRONG EVALUATION`, if they are evaluated to an incorrect value. Most parser tests will fail with a `Runtime error` since they are run through the evaluator while containing `new/let` bindings and other unimplemented features.
+Do `bash test.sh` from the source folder to run full set of regression tests. Evaluation tests can be found along the path `/test/` under the `.etest` extension, not all of the features of the evaluator are included into the final build, consult `test.sh` file in the same folder to see which exact files are being executed (test script itself provides some description of what is being tested). Outpus can be found under `/test/ans`. Another set of evaluation tests is under `/test/hotests` (with outputs written to the `/test/hotests/ans` folder), it checks some of the more advanced features such as recursion and function pointers (arrays were not included in the final build). Optimisation tests are under `/test/optests` (folder has the same structure as the hotests). Finally, some assembly-targeted tests as well as implementations of convolution and fizzbuzz algorithms can be found in the source folder (`/src/`). Output of these tests is printed directly to the command line during `/src/test.sh` execution.
 
 #AST description
 AST was not changed much. Notable changes:
