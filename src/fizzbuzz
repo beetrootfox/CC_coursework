@@ -1,0 +1,43 @@
+(mod3 <- n){
+	new d = n / 3 in
+	new mod = 0 in
+	new i = 0 in
+	while(!i < !d){
+		mod = !mod + 3;
+		i = !i + 1
+	};
+	n - !mod
+};
+(mod5 <- n){
+	new d = n / 5 in
+	new mod = 0 in
+	new i = 0 in 
+	while(!i < !d){
+		mod = !mod + 5;
+		i = !i + 1
+	};
+	n - !mod
+};
+(main <-){
+	new i = 0 in
+	new p = 0 in
+	while(!i < 101){
+		(printint <- !i);
+		if((mod3 <- !i) == 0){
+			 p = 3
+		}else{
+			 p = 0
+		};
+		(printint <- !p);
+		if((mod5 <- !i) == 0){
+			p = 5
+		}else{
+			p = 0
+		};
+		(printint <- !p);
+		i = !i + 1
+	}
+}
+
+
+

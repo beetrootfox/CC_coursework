@@ -218,7 +218,6 @@ and codegen symt control = function
     X86.label l3;
     X86.pop_ins ();
     X86.pop_ins ();
-    sp := !sp - 1;
     X86.push_ins ())
 | If (e1, e2, e3) ->
     (match e3 with

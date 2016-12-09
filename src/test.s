@@ -53,223 +53,62 @@ retq
 .cfi_endproc
 
 
-.globl _convolve
+.globl _mod3
 .align 4, 0x90
-_convolve:
+_mod3:
 .cfi_startproc
 pushq %rbp
 .cfi_def_cfa_offset 16
 .cfi_offset %rbp, -16
 movq %rsp, %rbp
 .cfi_def_cfa_register %rbp
-subq $48, %rsp
+subq $24, %rsp
 movq %rdi, -16(%rbp)
-movq %rsi, -24(%rbp)
-movq %rdx, -32(%rbp)
-movq %rcx, -40(%rbp)
-push $0
-leaq -56(%rbp), %rax
+//offset 0
+movq -16(%rbp), %rax
+push %rax
+push $3
+pop %rbx
+pop %rax
+cqto
+idivq %rbx
+push %rax
+leaq -32(%rbp), %rax
 push %rax
 push $0
-leaq -72(%rbp), %rax
+leaq -48(%rbp), %rax
+push %rax
+push $0
+leaq -64(%rbp), %rax
 push %rax
 L1:
-//offset 6
-movq -64(%rbp), %rax
+//offset 7
+movq -72(%rbp), %rax
 push %rax
 pop %rax
 movq (%rax), %rax
-push %rax
-//offset 2
-movq -32(%rbp), %rax
 push %rax
 //offset 3
 movq -40(%rbp), %rax
 push %rax
 pop %rax
-pop %rbx
-addq %rax, %rbx
-push %rbx
+movq (%rax), %rax
+push %rax
 pop %rbx
 pop %rax
 cmpq %rbx, %rax
 jge L3
 L2:
-push $0
-leaq -88(%rbp), %rax
+//offset 5
+movq -56(%rbp), %rax
 push %rax
-push $0
-leaq -104(%rbp), %rax
-push %rax
-push $0
-leaq -120(%rbp), %rax
-push %rax
-//offset 6
-movq -64(%rbp), %rax
+//offset 5
+movq -56(%rbp), %rax
 push %rax
 pop %rax
 movq (%rax), %rax
 push %rax
-//offset 3
-movq -40(%rbp), %rax
-push %rax
-pop %rbx
-pop %rax
-cmpq %rbx, %rax
-jle L5
-L4:
-//offset 10
-movq -96(%rbp), %rax
-push %rax
-//offset 6
-movq -64(%rbp), %rax
-push %rax
-pop %rax
-movq (%rax), %rax
-push %rax
-//offset 3
-movq -40(%rbp), %rax
-push %rax
-pop %rax
-pop %rbx
-subq %rax, %rbx
-push %rbx
-pop %rbx
-pop %rax
-movq %rbx, (%rax)
-push %rbx
-jmp L6
-L5:
-//offset 10
-movq -96(%rbp), %rax
-push %rax
-push $0
-pop %rbx
-pop %rax
-movq %rbx, (%rax)
-push %rbx
-L6:
-//offset 6
-movq -64(%rbp), %rax
-push %rax
-pop %rax
-movq (%rax), %rax
-push %rax
-//offset 2
-movq -32(%rbp), %rax
-push %rax
-pop %rbx
-pop %rax
-cmpq %rbx, %rax
-jge L8
-L7:
-//offset 12
-movq -112(%rbp), %rax
-push %rax
-//offset 6
-movq -64(%rbp), %rax
-push %rax
-pop %rax
-movq (%rax), %rax
-push %rax
-//offset 2
-movq -32(%rbp), %rax
-push %rax
-pop %rax
-pop %rbx
-subq %rax, %rbx
-push %rbx
-pop %rbx
-pop %rax
-movq %rbx, (%rax)
-push %rbx
-jmp L9
-L8:
-//offset 12
-movq -112(%rbp), %rax
-push %rax
-//offset 2
-movq -32(%rbp), %rax
-push %rax
-pop %rbx
-pop %rax
-movq %rbx, (%rax)
-push %rbx
-L9:
-//offset 14
-movq -128(%rbp), %rax
-push %rax
-//offset 10
-movq -96(%rbp), %rax
-push %rax
-pop %rax
-movq (%rax), %rax
-push %rax
-pop %rbx
-pop %rax
-movq %rbx, (%rax)
-push %rbx
-L10:
-//offset 14
-movq -128(%rbp), %rax
-push %rax
-pop %rax
-movq (%rax), %rax
-push %rax
-//offset 12
-movq -112(%rbp), %rax
-push %rax
-pop %rax
-movq (%rax), %rax
-push %rax
-pop %rbx
-pop %rax
-cmpq %rbx, %rax
-jge L12
-L11:
-//offset 8
-movq -80(%rbp), %rax
-push %rax
-//offset 8
-movq -80(%rbp), %rax
-push %rax
-pop %rax
-movq (%rax), %rax
-push %rax
-//offset 14
-movq -128(%rbp), %rax
-push %rax
-pop %rax
-movq (%rax), %rax
-push %rax
-pop %rax
-movq %rax, %rdi
-callq *-16(%rbp)
-push %rax
-//offset 6
-movq -64(%rbp), %rax
-push %rax
-pop %rax
-movq (%rax), %rax
-push %rax
-//offset 14
-movq -128(%rbp), %rax
-push %rax
-pop %rax
-movq (%rax), %rax
-push %rax
-pop %rax
-pop %rbx
-subq %rax, %rbx
-push %rbx
-pop %rax
-movq %rax, %rdi
-callq *-24(%rbp)
-push %rax
-pop %rax
-pop %rbx
-imulq %rax, %rbx
-push %rbx
+push $3
 pop %rax
 pop %rbx
 addq %rax, %rbx
@@ -278,11 +117,11 @@ pop %rbx
 pop %rax
 movq %rbx, (%rax)
 push %rbx
-//offset 14
-movq -128(%rbp), %rax
+//offset 7
+movq -72(%rbp), %rax
 push %rax
-//offset 14
-movq -128(%rbp), %rax
+//offset 7
+movq -72(%rbp), %rax
 push %rax
 pop %rax
 movq (%rax), %rax
@@ -298,108 +137,47 @@ movq %rbx, (%rax)
 push %rbx
 pop %rax
 pop %rbx
-push %rax
-pop %rax
-jmp L10
-L12:
-push $0
-//offset 6
-movq -64(%rbp), %rax
-push %rax
-//offset 6
-movq -64(%rbp), %rax
-push %rax
-pop %rax
-movq (%rax), %rax
-push %rax
-push $1
-pop %rax
-pop %rbx
-addq %rax, %rbx
-push %rbx
-pop %rbx
-pop %rax
-movq %rbx, (%rax)
-push %rbx
-pop %rax
-pop %rbx
-push %rax
-pop %rax
-pop %rbx
-push %rax
-pop %rax
-pop %rbx
-push %rax
-pop %rax
-pop %rbx
-push %rax
-pop %rax
-pop %rbx
-pop %rcx
-push %rax
-pop %rax
-pop %rbx
-pop %rcx
-push %rax
-pop %rax
-pop %rbx
-pop %rcx
 push %rax
 pop %rax
 jmp L1
 L3:
 push $0
-//offset 8
-movq -80(%rbp), %rax
+//offset 0
+movq -16(%rbp), %rax
+push %rax
+//offset 5
+movq -56(%rbp), %rax
 push %rax
 pop %rax
 movq (%rax), %rax
 push %rax
 pop %rax
 pop %rbx
-push %rax
-pop %rax
-pop %rbx
-pop %rcx
-push %rax
-pop %rax
-pop %rbx
-pop %rcx
-push %rax
-pop %rax
-addq $48, %rsp
-popq %rbp
-retq
-.cfi_endproc
-.globl _fun1
-.align 4, 0x90
-_fun1:
-.cfi_startproc
-pushq %rbp
-.cfi_def_cfa_offset 16
-.cfi_offset %rbp, -16
-movq %rsp, %rbp
-.cfi_def_cfa_register %rbp
-subq $24, %rsp
-movq %rdi, -16(%rbp)
-//offset 0
-movq -16(%rbp), %rax
-push %rax
-//offset 0
-movq -16(%rbp), %rax
-push %rax
-pop %rax
-pop %rbx
-addq %rax, %rbx
+subq %rax, %rbx
 push %rbx
+pop %rax
+pop %rbx
+push %rax
+pop %rax
+pop %rbx
+pop %rcx
+push %rax
+pop %rax
+pop %rbx
+pop %rcx
+push %rax
+pop %rax
+pop %rbx
+pop %rcx
+push %rax
 pop %rax
 addq $24, %rsp
 popq %rbp
 retq
 .cfi_endproc
-.globl _fun2
+.globl _mod5
 .align 4, 0x90
-_fun2:
+_mod5:
 .cfi_startproc
 pushq %rbp
 .cfi_def_cfa_offset 16
@@ -411,16 +189,108 @@ movq %rdi, -16(%rbp)
 //offset 0
 movq -16(%rbp), %rax
 push %rax
-push $10
-pop %rax
-pop %rbx
-addq %rax, %rbx
-push %rbx
-push $2
+push $5
 pop %rbx
 pop %rax
 cqto
 idivq %rbx
+push %rax
+leaq -32(%rbp), %rax
+push %rax
+push $0
+leaq -48(%rbp), %rax
+push %rax
+push $0
+leaq -64(%rbp), %rax
+push %rax
+L4:
+//offset 7
+movq -72(%rbp), %rax
+push %rax
+pop %rax
+movq (%rax), %rax
+push %rax
+//offset 3
+movq -40(%rbp), %rax
+push %rax
+pop %rax
+movq (%rax), %rax
+push %rax
+pop %rbx
+pop %rax
+cmpq %rbx, %rax
+jge L6
+L5:
+//offset 5
+movq -56(%rbp), %rax
+push %rax
+//offset 5
+movq -56(%rbp), %rax
+push %rax
+pop %rax
+movq (%rax), %rax
+push %rax
+push $5
+pop %rax
+pop %rbx
+addq %rax, %rbx
+push %rbx
+pop %rbx
+pop %rax
+movq %rbx, (%rax)
+push %rbx
+//offset 7
+movq -72(%rbp), %rax
+push %rax
+//offset 7
+movq -72(%rbp), %rax
+push %rax
+pop %rax
+movq (%rax), %rax
+push %rax
+push $1
+pop %rax
+pop %rbx
+addq %rax, %rbx
+push %rbx
+pop %rbx
+pop %rax
+movq %rbx, (%rax)
+push %rbx
+pop %rax
+pop %rbx
+push %rax
+pop %rax
+jmp L4
+L6:
+push $0
+//offset 0
+movq -16(%rbp), %rax
+push %rax
+//offset 5
+movq -56(%rbp), %rax
+push %rax
+pop %rax
+movq (%rax), %rax
+push %rax
+pop %rax
+pop %rbx
+subq %rax, %rbx
+push %rbx
+pop %rax
+pop %rbx
+push %rax
+pop %rax
+pop %rbx
+pop %rcx
+push %rax
+pop %rax
+pop %rbx
+pop %rcx
+push %rax
+pop %rax
+pop %rbx
+pop %rcx
 push %rax
 pop %rax
 addq $24, %rsp
@@ -444,21 +314,166 @@ Ltmp8:
 subq    $16, %rsp
 movl    $260, %edi              ## imm = 0x104
 movl    $0, -4(%rbp)
-leaq _fun2(%rip), %rax
+push $0
+leaq -24(%rbp), %rax
+push %rax
+push $0
+leaq -40(%rbp), %rax
+push %rax
+L7:
+//offset 2
+movq -32(%rbp), %rax
+push %rax
+pop %rax
+movq (%rax), %rax
+push %rax
+push $101
+pop %rbx
+pop %rax
+cmpq %rbx, %rax
+jge L9
+L8:
+//offset 2
+movq -32(%rbp), %rax
+push %rax
+pop %rax
+movq (%rax), %rax
+push %rax
+pop %rdi
+callq _printint
+push $0
+//offset 2
+movq -32(%rbp), %rax
+push %rax
+pop %rax
+movq (%rax), %rax
 push %rax
 pop %rax
 movq %rax, %rdi
-leaq _fun1(%rip), %rax
+callq _mod3
+push %rax
+push $0
+pop %rbx
+pop %rax
+cmpq %rbx, %rax
+jne L11
+L10:
+//offset 4
+movq -48(%rbp), %rax
+push %rax
+push $3
+pop %rbx
+pop %rax
+movq %rbx, (%rax)
+push %rbx
+jmp L12
+L11:
+//offset 4
+movq -48(%rbp), %rax
+push %rax
+push $0
+pop %rbx
+pop %rax
+movq %rbx, (%rax)
+push %rbx
+L12:
+//offset 4
+movq -48(%rbp), %rax
 push %rax
 pop %rax
-movq %rax, %rsi
-push $13
+movq (%rax), %rax
+push %rax
+pop %rdi
+callq _printint
+push $0
+//offset 2
+movq -32(%rbp), %rax
+push %rax
 pop %rax
-movq %rax, %rdx
-push $10
+movq (%rax), %rax
+push %rax
 pop %rax
-movq %rax, %rcx
-callq _convolve
+movq %rax, %rdi
+callq _mod5
+push %rax
+push $0
+pop %rbx
+pop %rax
+cmpq %rbx, %rax
+jne L14
+L13:
+//offset 4
+movq -48(%rbp), %rax
+push %rax
+push $5
+pop %rbx
+pop %rax
+movq %rbx, (%rax)
+push %rbx
+jmp L15
+L14:
+//offset 4
+movq -48(%rbp), %rax
+push %rax
+push $0
+pop %rbx
+pop %rax
+movq %rbx, (%rax)
+push %rbx
+L15:
+//offset 4
+movq -48(%rbp), %rax
+push %rax
+pop %rax
+movq (%rax), %rax
+push %rax
+pop %rdi
+callq _printint
+push $0
+//offset 2
+movq -32(%rbp), %rax
+push %rax
+//offset 2
+movq -32(%rbp), %rax
+push %rax
+pop %rax
+movq (%rax), %rax
+push %rax
+push $1
+pop %rax
+pop %rbx
+addq %rax, %rbx
+push %rbx
+pop %rbx
+pop %rax
+movq %rbx, (%rax)
+push %rbx
+pop %rax
+pop %rbx
+push %rax
+pop %rax
+pop %rbx
+push %rax
+pop %rax
+pop %rbx
+push %rax
+pop %rax
+pop %rbx
+push %rax
+pop %rax
+pop %rbx
+push %rax
+pop %rax
+jmp L7
+L9:
+push $0
+pop %rax
+pop %rbx
+pop %rcx
+push %rax
+pop %rax
+pop %rbx
+pop %rcx
 push %rax
 
 pop     %rdi

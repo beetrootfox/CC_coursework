@@ -265,6 +265,7 @@ let compile flist = let (_, exp) = eval_prog ("",Empty) flist in
 Interp.interpret [] exp
 let generate flist = let (_, exp) = eval_prog ("", Empty) flist in
 GenCode.interpret [] exp
+
 let opt = let len = Array.length Sys.argv in
 if len > 1 then Sys.argv.(1) = "-o" else false
 let compile_x86 flist = let (_, exp) = Gen_x86.fungen ("", Empty) flist in

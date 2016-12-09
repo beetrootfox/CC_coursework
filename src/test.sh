@@ -13,4 +13,7 @@ echo "convolution test"
 ./test.native < conv > test.s
 gcc -o test test.s
 ./test
-
+echo "fizzbuzz test"
+./test.native < fizzbuzz > test.s
+gcc -o test test.s
+./test
